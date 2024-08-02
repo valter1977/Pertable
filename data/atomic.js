@@ -1,0 +1,1111 @@
+Properties.add("atomweight",
+[
+1.00794,//H
+4.002602,//He
+6.941,//Li
+9.012182,//Be
+10.811,//B
+12.0107,//C
+14.0067,//N
+15.9994,//O
+18.9984032,//F
+20.1797,//Ne
+22.98976928,//Na
+24.3050,//Mg
+26.9815386,//Al
+28.0855,//Si
+30.973762,//P
+32.065,//S
+35.453,//Cl
+39.948,//At
+39.0983,//K
+40.078,//Ca
+44.955912,//Sc
+47.867,//Ti
+50.9415,//V 
+51.9961,//Cr
+54.938045,//Mn
+55.845,//Fe
+58.933195,//Co
+58.6934,//Ni
+63.546,//Cu
+65.38,//Zn
+69.723,//Ga
+72.64,//Ge
+74.92160,//As
+78.96,//Se
+79.904,//Br
+83.798,//Kr
+85.4678,//Rb 
+87.62,//Sr
+88.90585,//Y
+91.224,//Zr
+92.90638,//Nb
+95.96,//Mo
+98,//Tc
+101.07,//Ru
+102.90550,//Rh
+106.4,//Pd
+107.8682,//Ag
+112.411,//Cd
+114.818,//In
+118.710,//Sn
+121.760,//Sb
+127.60,//Te
+126.90447,//I
+131.293,//Xe
+132.9054519,//Cs
+137.327,//Ba
+138.90547,//La
+140.116,   
+140.90765,  
+144.242,   
+145,      
+150.36,   
+151.964,   
+157.25,   
+158.92535,  
+162.500,    
+164.93032,   
+167.259,   
+168.93421,  
+173.054,//Yb
+174.9668,//Lu
+178.49,//Hf
+180.94788,//Ta
+183.84,//W
+186.207,//Re
+190.23,//Os
+192.217,//Ir
+195.084,//Pt
+196.966569,//Au
+200.59,//Hg
+204.3833,//Tl
+207.2,//Pb
+208.98040,//Bi
+210,//Po
+210,//At  
+222,//Rn  
+223,//Fr  
+226,//Ra  
+227,//Ac  
+232.03806,  
+231.03588,      
+238.02891,   
+237,      
+244,      
+243,      
+247,      
+247,      
+251,      
+252,      
+257,      
+258,      
+259,//No  
+262,//Lr  
+261,//Rf  
+262,//Db  
+266,//Sg  
+264,//Bh  
+267,//Hs  
+268,//Mt  
+271,//Ds  
+272//Rg
+],
+{
+unit: "g/mol",
+source: ("http://en.wikipedia.org/wiki/List_of_elements_by_name").blank(),
+category: "generalprop"
+}
+);
+
+Properties.add("electronconf",
+[
+"1s<SUP>1</SUP>",
+"1s<SUP>2</SUP>",
+"[He]2s<SUP>1</SUP>",
+"[He]2s<SUP>2</SUP>",
+"[He]2s<SUP>2</SUP>2p<SUP>1</SUP>",
+"[He]2s<SUP>2</SUP>2p<SUP>2</SUP>",
+"[He]2s<SUP>2</SUP>2p<SUP>3</SUP>",
+"[He]2s<SUP>2</SUP>2p<SUP>4</SUP>",
+"[He]2s<SUP>2</SUP>2p<SUP>5</SUP>",
+"[He]2s<SUP>2</SUP>2p<SUP>6</SUP>",
+"[Ne]3s<SUP>1</SUP>",
+"[Ne]3s<SUP>2</SUP>",
+"[Ne]3s<SUP>2</SUP>3p<SUP>1</SUP>",
+"[Ne]3s<SUP>2</SUP>3p<SUP>2</SUP>",
+"[Ne]3s<SUP>2</SUP>3p<SUP>3</SUP>",
+"[Ne]3s<SUP>2</SUP>3p<SUP>4</SUP>",
+"[Ne]3s<SUP>2</SUP>3p<SUP>5</SUP>",
+"[Ne]3s<SUP>2</SUP>3p<SUP>6</SUP>",
+"[Ar]4s<SUP>1</SUP>",
+"[Ar]4s<SUP>2</SUP>",
+"[Ar]3d<SUP>1</SUP>4s<SUP>2</SUP>",
+"[Ar]3d<SUP>2</SUP>4s<SUP>2</SUP>",
+"[Ar]3d<SUP>3</SUP>4s<SUP>2</SUP>",
+"[Ar]3d<SUP>5</SUP>4s<SUP>1</SUP>",
+"[Ar]3d<SUP>5</SUP>4s<SUP>2</SUP>",
+"[Ar]3d<SUP>6</SUP>4s<SUP>2</SUP>",
+"[Ar]3d<SUP>7</SUP>4s<SUP>2</SUP>",
+"[Ar]3d<SUP>8</SUP>4s<SUP>2</SUP>",
+"[Ar]3d<SUP>10</SUP>4s<SUP>1</SUP>",
+"[Ar]3d<SUP>10</SUP>4s<SUP>2</SUP>",
+"[Ar]3d<SUP>10</SUP>4s<SUP>2</SUP>4p<SUP>1</SUP>",
+"[Ar]3d<SUP>10</SUP>4s<SUP>2</SUP>4p<SUP>2</SUP>",
+"[Ar]3d<SUP>10</SUP>4s<SUP>2</SUP>4p<SUP>3</SUP>",
+"[Ar]3d<SUP>10</SUP>4s<SUP>2</SUP>4p<SUP>4</SUP>",
+"[Ar]3d<SUP>10</SUP>4s<SUP>2</SUP>4p<SUP>5</SUP>",
+"[Ar]3d<SUP>10</SUP>4s<SUP>2</SUP>4p<SUP>6</SUP>",
+"[Kr]5s<SUP>1</SUP>",
+"[Kr]5s<SUP>2</SUP>",
+"[Kr]4d<SUP>1</SUP>5s<SUP>2</SUP>",
+"[Kr]4d<SUP>2</SUP>5s<SUP>2</SUP>",
+"[Kr]4d<SUP>4</SUP>5s<SUP>1</SUP>",
+"[Kr]4d<SUP>5</SUP>5s<SUP>1</SUP>",
+"[Kr]4d<SUP>6</SUP>5s<SUP>1</SUP>",
+"[Kr]4d<SUP>7</SUP>5s<SUP>1</SUP>",
+"[Kr]4d<SUP>8</SUP>5s<SUP>1</SUP>",
+"[Kr]4d<SUP>10</SUP>",
+"[Kr]4d<SUP>10</SUP>5s<SUP>1</SUP>",
+"[Kr]4d<SUP>10</SUP>5s<SUP>2</SUP>",
+"[Kr]4d<SUP>10</SUP>5s<SUP>2</SUP>5p<SUP>1</SUP>",
+"[Kr]4d<SUP>10</SUP>5s<SUP>2</SUP>5p<SUP>2</SUP>",
+"[Kr]4d<SUP>10</SUP>5s<SUP>2</SUP>5p<SUP>3</SUP>",
+"[Kr]4d<SUP>10</SUP>5s<SUP>2</SUP>5p<SUP>4</SUP>",
+"[Kr]4d<SUP>10</SUP>5s<SUP>2</SUP>5p<SUP>5</SUP>",
+"[Kr]4d<SUP>10</SUP>5s<SUP>2</SUP>5p<SUP>6</SUP>",
+"[Xe]6s<SUP>1</SUP>",
+"[Xe]6s<SUP>2</SUP>",
+"[Xe]5d<SUP>1</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>2</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>3</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>4</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>5</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>6</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>7</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>7</SUP>5d<SUP>1</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>9</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>10</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>11</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>12</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>13</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>14</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>14</SUP>5d<SUP>1</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>14</SUP>5d<SUP>2</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>14</SUP>5d<SUP>3</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>14</SUP>5d<SUP>4</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>14</SUP>5d<SUP>5</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>14</SUP>5d<SUP>6</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>14</SUP>5d<SUP>7</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>14</SUP>5d<SUP>9</SUP>6s<SUP>1</SUP>",
+"[Xe]4f<SUP>14</SUP>5d<SUP>10</SUP>6s<SUP>1</SUP>",
+"[Xe]4f<SUP>14</SUP>5d<SUP>10</SUP>6s<SUP>2</SUP>",
+"[Xe]4f<SUP>14</SUP>5d<SUP>10</SUP>6s<SUP>2</SUP>6p<SUP>1</SUP>",
+"[Xe]4f<SUP>14</SUP>5d<SUP>10</SUP>6s<SUP>2</SUP>6p<SUP>2</SUP>",
+"[Xe]4f<SUP>14</SUP>5d<SUP>10</SUP>6s<SUP>2</SUP>6p<SUP>3</SUP>",
+"[Xe]4f<SUP>14</SUP>5d<SUP>10</SUP>6s<SUP>2</SUP>6p<SUP>4</SUP>",
+"[Xe]4f<SUP>14</SUP>5d<SUP>10</SUP>6s<SUP>2</SUP>6p<SUP>5</SUP>",
+"[Xe]4f<SUP>14</SUP>5d<SUP>10</SUP>6s<SUP>2</SUP>6p<SUP>6</SUP>",
+"[Rn]7s<SUP>1</SUP>",
+"[Rn]7s<SUP>2</SUP>",
+"[Rn]6d<SUP>1</SUP>7s<SUP>2</SUP>",
+"[Rn]6d<SUP>2</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>2</SUP>6d<SUP>1</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>3</SUP>6d<SUP>1</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>4</SUP>6d<SUP>1</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>6</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>7</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>7</SUP>6d<SUP>1</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>9</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>10</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>11</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>12</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>13</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>14</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>14</SUP>6d<SUP>1</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>14</SUP>6d<SUP>2</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>14</SUP>6d<SUP>3</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>14</SUP>6d<SUP>4</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>14</SUP>6d<SUP>5</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>14</SUP>6d<SUP>6</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>14</SUP>6d<SUP>7</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>14</SUP>6d<SUP>9</SUP>7s<SUP>1</SUP>",
+"[Rn]5f<SUP>14</SUP>6d<SUP>10</SUP>7s<SUP>1</SUP>",
+"[Rn]5f<SUP>14</SUP>6d<SUP>10</SUP>7s<SUP>2</SUP>",
+"[Rn]5f<SUP>14</SUP>6d<SUP>10</SUP>7s<SUP>2</SUP>7p<SUP>1</SUP>",
+"[Rn]5f<SUP>14</SUP>6d<SUP>10</SUP>7s<SUP>2</SUP>7p<SUP>2</SUP>",
+"[Rn]5f<SUP>14</SUP>6d<SUP>10</SUP>7s<SUP>2</SUP>7p<SUP>3</SUP>",
+"[Rn]5f<SUP>14</SUP>6d<SUP>10</SUP>7s<SUP>2</SUP>7p<SUP>4</SUP>",
+"[Rn]5f<SUP>14</SUP>6d<SUP>10</SUP>7s<SUP>2</SUP>7p<SUP>5</SUP>",
+"[Rn]5f<SUP>14</SUP>6d<SUP>10</SUP>7s<SUP>2</SUP>7p<SUP>6</SUP>"
+],
+{
+numeric: false,
+source: ("http://en.wikipedia.org/wiki/ Electron_configurations_of_the_elements_(data_page)").blank(),
+category: "atomicprop"
+}
+);
+
+//=========================================================================================
+
+Properties.add("elneg",
+[
+2.20,
+null, 
+0.98,
+1.57,
+2.04,
+2.55,
+3.04,
+3.44,
+3.98,
+null, 
+0.93,
+1.31,
+1.61,
+1.90,
+2.19,
+2.58,
+3.16,
+null, 
+0.82,
+1.00,
+1.36,
+1.54,
+1.63,
+1.66,
+1.55,
+1.83,
+1.88,
+1.91,
+1.90,
+1.65,
+1.81,
+2.01,
+2.18,
+2.55,
+2.96,
+3.00, 
+0.82,
+0.95,
+1.22,
+1.33,
+1.6, 
+2.16,
+2.10,
+2.2, 
+2.28,
+2.20,
+1.93,
+1.69,
+1.78,
+1.96,
+2.05,
+2.1, 
+2.66,
+2.60,
+0.79,
+0.89,
+1.10,
+1.12,
+1.13,
+1.14,
+1.13, 
+1.17,
+1.2, 
+1.20,
+1.2, 
+1.22,
+1.23,
+1.24,
+1.25,
+1.1, 
+1.27, 
+1.3, 
+1.5, 
+2.36, 
+1.9, 
+2.2, 
+2.2, 
+2.28, 
+2.54, 
+2.0, 
+1.62, 
+2.33,
+2.02, 
+2.0, 
+2.2, 
+null, 
+0.7, 
+0.9, 
+1.1, 
+1.3, 
+1.5, 
+1.38, 
+1.36, 
+1.28, 
+1.3, 
+1.3, 
+1.3, 
+1.3, 
+1.3, 
+1.3, 
+1.3, 
+1.3, 
+null, 
+null, 
+null, 
+null, 
+null, 
+null, 
+null, 
+null, 
+null
+],
+{
+source: ("http://en.wikipedia.org/wiki/ Electronegativities_of_the_elements_(data_page)").blank(),
+category: "atomicprop"
+}
+);
+
+//=====================================================================================
+
+Properties.add("oxidation",
+[
+"-1,+1",//H
+null,//He
+"+1",//Li
+"+2",//Be
+"+3",//B
+"-4,+4",//C
+"-3,+3,+5",//N
+"-2",//O
+"-1",//F
+null,//Ne
+"+1",//Na
+"+2",//Mg
+"+3",//Al
+"-4,+4",//Si
+"-3,+3,+5",//P
+"-2,+2,+4,+6",//S
+"-1,+1,+3,+5,+7",//Cl
+null,//Ar
+"+1",//K
+"+2",//Ca
+"+3",//Sc
+"+4",//Ti
+"+5",//V
+"+3,+6",//Cr
+"+2,+4,+7",//Mn
+"+2,+3",//Fe
+"+2,+3",//Co
+"+2",//Ni
+"+2",//Cu
+"+2",//Zn
+"+3",//Ga
+"-4,+2,+4",//Ge
+"-3,+3,+5",//As
+"-2,+2,+4,+6",//Se
+"-1,+1,+3,+5,+7",//Br
+"+2",//Kr
+"+1",//Rb
+"+2",//Sr
+"+3",//Y
+"+4",//Zr
+"+5",//Nb
+"+4,+6",//Mo
+"+4,+7",//Tc
+"+4",//Ru
+"+3",//Rh
+"+2,+4",//Pd
+"+1",//Ag
+"+2",//Cd
+"+3",//In
+"-4,+2,+4",//Sn
+"-3,+3,+5",//Sb
+"-2,+2,+4,+6",//Te
+"-1,+1,+3,+5,+7",//I
+"+2,+4,+6",//Xe
+"+1",//Cs
+"+2",//Ba
+"+3",//La
+"+3,+4",//Ce
+"+3",//Pr
+"+3",//Nd
+"+3",//Pm
+"+3",//Sm
+"+2,+3",//Eu
+"+3",//Gd
+"+3",//Tb
+"+3",//Dy
+"+3",//Ho
+"+3",//Er
+"+3",//Tm
+"+3",//Yb
+"+3",//Lu
+"+4",//Hf
+"+5",//Ta
+"+4,+6",//W
+"+4",//Re
+"+4",//Os
+"+3,+4",//Ir
+"+2,+4",//Pt
+"+3",//Au
+"+1,+2",//Hg
+"+1,+3",//Tl
+"-4,+2,+4",//Pb
+"+3",//Bi
+"-2,+2,+4",//Po
+"-1,+1",//At
+"+2",//Rn
+"+1",//Fr
+"+2",//Ra
+"+3",//Ac
+"+4",//Th
+"+5",//Pa
+"+6",//U
+"+5",//Np
+"+4",//Pu
+"+3",//Am
+"+3",//Cm
+"+3",//Bk
+"+3",//Cf
+"+3",//Es
+"+3",//Fm
+"+3",//Md
+"+3",//No
+"+3",//Lr
+"+4",//Rf
+null,//Db
+null,//Sg
+null,//Bh
+null,//Hs
+null,//Mt
+null,//Ds
+null//Rg
+],
+{
+numeric: false,
+category: "atomicprop",
+source: ("http://en.wikipedia.org/wiki/List_of_oxidation_states_of_the_elements").blank(),
+format: function(value) { return value.replace("-", "&#8211;"); }
+}
+);
+
+//=====================================================================================
+
+Properties.add("ionizenergy",
+[
+ 13.5984,//H
+ 24.5874,//He
+ 5.3917,//Li
+ 9.3227,//Be
+ 8.2980,//B
+ 11.2603,//C
+ 14.5341,//N
+ 13.6181,//O
+ 17.4228,//F
+ 21.5645,//Ne
+ 5.1391,//Na
+ 7.6462,//Mg
+ 5.9858,//Al
+ 8.1517,//Si
+ 10.4867,//P
+ 10.3600,//S
+ 12.9676,//Cl
+ 15.7596,//Ar
+ 4.3407,//K
+ 6.1132,//Ca
+ 6.5615,//Sc
+ 6.8281,//Ti
+ 6.7462,//V
+ 6.7665,//Cr
+ 7.434,//Mn
+ 7.9024,//Fe
+ 7.8810,//Co
+ 7.6398,//Ni
+ 7.7264,//Cu
+ 9.3942,//Zn
+ 5.9993,//Ga
+ 7.8994,//Ge
+ 9.7886,//As
+ 9.7524,//Se
+ 11.8138,//Br
+ 13.9996,//Kr
+ 4.1771,//Rb
+ 5.6949,//Sr
+ 6.2173,//Y
+ 6.6339,//Zr
+ 6.7589,//Nb
+ 7.0924,//Mo
+ 7.28,//Tc
+ 7.3605,//Ru
+ 7.4589,//Rh
+ 8.3369,//Pd
+ 7.5762,//Ag
+ 8.9938,//Cd
+ 5.7864,//In
+ 7.3439,//Sn
+ 8.6084,//Sb
+ 9.0096,//Te
+ 10.4513,//I
+ 12.1298,//Xe
+ 3.8939,//Cs
+ 5.2117,//Ba
+ 5.5769,//La
+ 5.5387,//Ce
+ 5.473,//Pr
+ 5.525,//Nd
+ 5.582,//Pm
+ 5.6437,//Sm
+ 5.6704,//Eu
+ 6.1501,//Gd
+ 5.8638,//Tb
+ 5.9389,//Dy
+ 6.0215,//Ho
+ 6.1077,//Er
+ 6.1843,//Tm
+ 6.2542,//Yb
+ 5.4259,//Lu
+ 6.8251,//Hf
+ 7.5496,//Ta
+ 7.864,//W
+ 7.8335,//Re
+ 8.4382,//Os
+ 8.9670,//Ir
+ 8.9587,//Pt
+ 9.2255,//Au
+ 10.4375,//Hg
+ 6.1082,//Tl
+ 7.4167,//Pb
+ 7.2856,//Bi
+ 8.417,//Po
+ 9.3,//At
+ 10.7485,//Rn
+ 4.0727,//Fr
+ 5.2784,//Ra
+ 5.17,//Ac
+ 6.3067,//Th
+ 5.89,//Pa
+ 6.1941,//U
+ 6.2657,//Np
+ 6.0260,//Pu
+ 5.9738,//Am
+ 5.9915,//Cm
+ 6.1979,//Bk
+ 6.2817,//Cf
+ 6.42,//Es
+ 6.50,//Fm
+ 6.58,//Md
+ 6.65,//No
+ 4.9,//Lr
+ 6.0,//Rf
+ null,//Db
+ null,//Sg
+ null,//Bh
+ null,//Hs
+ null,//Mt
+ null,//Ds
+ null//Rg
+],
+{
+	unit: "eV",
+	source: ["CRC Handbook of Chemistry and Physics, 88th edition, page 1-14",
+	("http://physics.nist.gov/PhysRefData/IonEnergy/tblNew.html").blank()],
+	category: "atomicprop"
+}
+);
+
+//=========================================================================================
+
+Properties.add("affinity",
+[
+ 0.754195,//H
+ null,//He
+ 0.618049,//Li
+ null,//Be
+ 0.279723,//B
+ 1.262119,//C
+ null,//N
+ 1.4611096,//O
+ 3.4011895,//F
+ null,//Ne
+ 0.547926,//Na
+ null,//Mg
+ 0.43283,//Al
+ 1.3895213,//Si
+ 0.74668,//P
+ 2.07710418,//S
+ 3.612724,//Cl
+ null,//Ar
+ 0.501459,//K
+ 0.02455,//Ca
+ 0.188,//Sc
+ 0.084,//Ti
+ 0.526,//V
+ 0.67584,//Cr
+ null,//Mn
+ 0.151,//Fe
+ 0.6633,//Co
+ 1.15716,//Ni
+ 1.23578,//Cu
+ null,//Zn
+ 0.43,//Ga
+ 1.232712,//Ge
+ 0.8048,//As
+ 2.02067,//Se
+ 3.363590,//Br
+ null,//Kr
+ 0.485916,//Rb
+ 0.05206,//Sr
+ 0.307,//Y
+ 0.427,//Zr
+ 0.894,//Nb
+ 0.7473,//Mo
+ 0.55,//Tc
+ 1.05,//Ru
+ 1.14289,//Rh
+ 0.56214,//Pd
+ 1.30447,//Ag
+ null,//Cd
+ 0.38392,//In
+ 1.112067,//Sn
+ 1.047401,//Sb
+ 1.970876,//Te
+ 3.0590463,//I
+ null,//Xe
+ 0.47164,//Cs
+ 0.14462,//Ba
+ 0.47,//La
+ 0.65,//Ce
+ 0.962,//Pr
+ null,//Nd
+ null,//Pm
+ null,//Sm
+ 0.864,//Eu
+ null,//Gd
+ null,//Tb
+ null,//Dy
+ null,//Ho
+ null,//Er
+ 1.029,//Tm
+ null,//Yb
+ 0.34,//Lu
+ null,//Hf
+ 0.323,//Ta
+ 0.81626,//W
+ 1.138,//Re
+ 1.0778,//Os
+ 1.56436,//Ir
+ 2.12510,//Pt
+ 2.308610,//Au
+ null,//Hg
+ 0.377,//Tl
+ 0.364,//Pb
+ 0.942362,//Bi
+ 1.9,//Po
+ 2.8,//At
+ null,//Rn
+ 0.46,//Fr
+ 0.10,//Ra
+ 0.35,//Ac
+ null,//Th
+ null,//Pa
+ null,//U
+ null,//Np
+ null,//Pu
+ null,//Am
+ null,//Cm
+ null,//Bk
+ null,//Cf
+ null,//Es
+ null,//Fm
+ null,//Md
+ null,//No
+ null,//Lr
+ null,//Rf
+ null,//Db
+ null,//Sg
+ null,//Bh
+ null,//Hs
+ null,//Mt
+ null,//Ds
+ null//Rg
+],
+{
+unit: "eV",
+source: [("http://en.wikipedia.org/wiki/Electron_affinity_(data_page)").blank(),
+"CRC Handbook of Chemistry and Physics, 88th edition, page 10-157"],
+category: "atomicprop"
+}
+);
+
+//===============================================================================
+
+Properties.add("covalentradius",
+[
+37,
+32,
+134,
+90,
+82,
+77,
+75,
+73,
+71,
+69,
+154,
+130,
+118,
+111,
+106,
+102,
+99,
+97,
+196,
+174,
+144,
+136,
+125,
+127,
+139,
+125,
+126,
+121,
+138,
+131,
+126,
+122,
+119,
+116,
+114,
+110,
+211,
+192,
+162,
+148,
+137,
+145,
+156,
+126,
+135,
+131,
+153,
+148,
+144,
+141,
+138,
+135,
+133,
+130,
+225,
+198,
+169,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+160,
+150,
+138,
+146,
+159,
+128,
+137,
+128,
+144,
+149,
+148,
+147,
+146,
+null,
+null,
+145,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null
+],
+{
+unit: "pm",
+category: "atomicprop",
+source: ("http://www.webelements.com/periodicity/covalent_radius/").blank()
+}
+);
+
+//====================================================================================
+
+Properties.add("empiricradius",
+[
+25,
+null,
+145,
+105,
+85,
+70,
+65,
+60,
+50,
+null,
+180,
+150,
+125,
+110,
+100,
+100,
+100,
+71,
+220,
+180,
+160,
+140,
+135,
+140,
+140,
+140,
+135,
+135,
+135,
+135,
+130,
+125,
+115,
+115,
+115,
+null,
+235,
+200,
+180,
+155,
+145,
+145,
+135,
+130,
+135,
+140,
+160,
+155,
+155,
+145,
+145,
+140,
+140,
+null,
+260,
+215,
+195,
+185,
+185,
+185,
+185,
+185,
+185,
+180,
+175,
+175,
+175,
+175,
+175,
+175,
+175,
+155,
+145,
+135,
+135,
+130,
+135,
+135,
+135,
+150,
+190,
+180,
+160,
+190,
+null,
+null,
+null,
+215,
+195,
+180,
+180,
+175,
+175,
+175,
+175,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null
+],
+{
+unit: "pm",
+category: "atomicprop",
+source: "J.C. Slater, J. Chem. Phys. 39 (1964), 3199"
+}
+);
+
+//===============================================================================
+
+Properties.add("calcradius",
+[
+53,
+31,
+167,
+112,
+87,
+67,
+56,
+48,
+42,
+38,
+190,
+145,
+118,
+111,
+98,
+88,
+79,
+71,
+243,
+194,
+184,
+176,
+171,
+166,
+161,
+156,
+152,
+149,
+145,
+142,
+136,
+125,
+114,
+103,
+94,
+88,
+265,
+219,
+212,
+206,
+198,
+190,
+183,
+178,
+173,
+169,
+165,
+161,
+156,
+145,
+133,
+123,
+115,
+108,
+298,
+253,
+null,
+null,
+247,
+206,
+205,
+238,
+231,
+233,
+225,
+228,
+null,
+226,
+222,
+222,
+217,
+208,
+200,
+193,
+188,
+185,
+180,
+177,
+174,
+171,
+156,
+154,
+143,
+135,
+null,
+120,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null,
+null
+],
+{
+unit: "pm",
+category: "atomicprop",
+source: "E. Clementi, D.L. Raimondi, W.P. Reinhardt, J. Chem. Phys. 38 (1963), 2686"
+}
+);

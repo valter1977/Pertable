@@ -1,0 +1,38 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="keywords" content="periodic table, interactive periodic table, perioodilisustabel, perioodilisussüsteem, chemical elements, keemilised elemendid, Mendelejevi tabel, Mendeleev's table, chemistry, keemia">
+<link href="styles/common.css" rel="stylesheet" type="text/css">
+<link href="styles/table.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="scripts/jquery.js"></script>
+<script type="text/javascript" src="scripts/hotkeys.js"></script>
+<script type="text/javascript" src="scripts/general.js"></script>
+<script type="text/javascript" src="scripts/dialogs.js"></script>
+<script type="text/javascript" src="scripts/app.js"></script>
+<script type="text/javascript" src="lang/english.js"></script>
+<script type="text/javascript" src="lang/eesti.js"></script>
+<script type="text/javascript" src="scripts/elements.js"></script>
+<script type="text/javascript" src="scripts/layouts.js"></script>
+<script type="text/javascript" src="scripts/data.js"></script>
+<script type="text/javascript" src="scripts/groups.js"></script>
+<title>Periodic Table of Chemical Elements</title></head>
+<body onLoad="APP.init()">
+<noscript>
+<p style="font-size: 150%;">This program is based on Javascript which is either disabled or unsupported by your web browser. Either enable Javascript or <a href="http://www.webdevelopersnotes.com/design/browsers_list.php3">upgrade</a> your web browser.</p>
+<p style="font-size: 150%;">Programm kasutab Javascripti, kuid Teie veebilehitseja ei toeta seda. Veenduge, et Javascript oleks lubatud või <a href="http://www.webdevelopersnotes.com/design/browsers_list.php3">uuendage</a> oma veebilehitsejat.</p>
+</noscript>
+<div>
+	<div id="title" onClick="$('#tools').toggle();">
+		<div id="apptitle"></div>
+		<!--<div id="layoutname"></div>-->
+	</div>
+</div>
+<div id="tools">
+   <div id="toolbar"></div>
+   <div id="language"></div>
+</div>
+<div id="pertable"></div>
+<p><span id="author"></span>: <a href="http://kodu.ut.ee/~kiisk/" target="_blank">Valter Kiisk</a>. <span id="version"></span>&nbsp;2016-02-27. <span id="download"></span></p>
+</body>
+</html>

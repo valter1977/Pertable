@@ -1,0 +1,41 @@
+body, table, select, input, button, option, textarea {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+	font-size: 100%;
+}
+
+table, select, input, button, option, textarea {
+	font-size: 100%;
+}
+
+a:link, a:visited {
+	color: #0000FF;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.link {
+	color: #0000FF;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.link:hover {
+	text-decoration: underline;
+}
+
+th {
+	font-style: normal;
+	font-weight: bold;
+	font-variant: normal;
+}
+
+sup {
+	font-size: 85%;
+}
+

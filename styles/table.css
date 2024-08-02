@@ -1,0 +1,161 @@
+td.cell, td.selected-cell {
+	text-align: center;
+	vertical-align: top;
+	min-width: 3em;
+	border-width: 5px;
+	border-style: solid;
+}
+
+td.cell {
+	padding: 4px;
+	border: 1px solid #000000;
+}
+
+td.selected-cell {
+	padding: 0px;
+	border: 5px solid #000000;
+}
+
+span.symbol {
+	color: #000000;
+	padding-left: 3px;
+	padding-right: 3px;
+	font: bold 160% Georgia, "Times New Roman", Times, serif;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+span.symbol:hover {
+	color: #FFFFFF;
+	background-color: #000000;
+}
+
+th.group {
+	vertical-align: bottom;
+	color: #FFFFFF;
+	background-color: #000000;
+}
+
+th.period {
+	text-align: right;
+	vertical-align: middle;
+	color: #FFFFFF;
+	background-color: #000000;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+th.filling {
+	font-size: 120%;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+th.filling:first-child {
+	text-align: right;
+}
+
+th.filling:last-child {
+	text-align: left;
+}
+
+th.block {
+	font-size: 120%;
+}
+
+div.info {
+	white-space: nowrap;
+	font: 85% Arial, Verdana, Helvetica, sans-serif;
+}
+
+td.lanthanides, td.actinides {
+	font: bold 160% Georgia, "Times New Roman", Times, serif;
+	text-align: center;
+}
+
+#info {
+	text-align: center;
+	vertical-align: top;
+}
+
+#title {
+	cursor: pointer;
+	font: bold 160% Georgia, "Times New Roman", Times, serif;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	/*font-variant: small-caps;*/
+}
+
+#apptitle {
+	display: inline-block;
+}
+
+#layoutname {
+	font-size: 60%;
+	display: inline-block;
+}
+
+#tools {
+	width: 100%;
+}
+
+#toolbar {
+	float: left;
+}
+
+#language {
+	float: right;
+	white-space: nowrap;
+}
+
+#language img {
+	margin-left: 5px;
+	cursor: pointer;
+	border: 1px solid #000000;
+}
+
+#pertable {
+	width: 100%;
+	overflow: auto;
+	padding-bottom: 1.3em;
+}
+
+#listing {
+	border-collapse: collapse;
+}
+
+#listing th, #listing td {
+	padding: 0.5em;
+}
+
+#listing tr.even {
+	background-color: #EBEBEB;
+}
+
+#listing tr.odd {
+	background-color: #FFFFFF;
+}
+
+#listing th {
+	vertical-align: top;
+	text-align: left;
+	cursor: pointer;
+}
+
+#minvalue, #maxvalue {
+	padding: 0.3em;
+}
+
+#property {
+	font-weight: bold;
+	text-align: center;
+}
+
+#scalebar {
+	text-align: center;
+}
+
+div.layout-select {
+	text-align: center;
+	margin: 20px 0px;
+}

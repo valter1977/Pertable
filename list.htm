@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link href="styles/common.css" rel="stylesheet" type="text/css">
+<link href="styles/table.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="scripts/general.js"></script>
+<script type="text/javascript">
+function init() {
+	const props = opener.getListDlg().getSelected();
+	const table = document.getElementById("listing");
+	let row;
+	let cell;
+	
+	row = table.insertRow(-1);
+	for (let k = 0; k < props.length; k++) {
+		cell = document.createElement("th");
+		cell.innerHTML = props[k].getName(true, true);
+		row.appendChild(cell);
+	}
+	
+	for (let i = 0; i < opener.SYMBOLS.length; i++) {
+	 	row = table.insertRow(-1);
+		for (k = 0; k < props.length; k++)
+			row.insertCell(-1).innerHTML = props[k].format(i);
+	}
+	
+	altRows(table);
+}
+</script>
+<title>Tabulated data for element</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body onload="init();">
+
+<table id="listing"></table>
+</body>
+</html>

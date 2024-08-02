@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="styles/plot.css" REL="stylesheet" type="text/css">
+<script type="text/javascript" src="scripts/jquery.js"></script>
+<script type="text/javascript" src="scripts/jquery.flot.js"></script>
+
+<script id="source" type="text/javascript">
+"use strict";
+
+const COLOR = 'blue';
+const DATA = new Array(1);
+const OPTS = {};
+
+(function() {
+	const prop = opener.getHistDlg().selected;
+	const length = opener.SYMBOLS.length;
+	const start = opener.getHistDlg().start;
+	const step = opener.getHistDlg().step;
+	const hs = 0.5 * step;
+	const count = opener.getHistDlg().count;
+	const midp = new Array(count + 1);
+	const x = new Array(count);
+	const y = new Array(count);
+	const xy = new Array(count);
+	
+	for (let i = 0; i < count; i++) {
+		midp[i] = start + i * step;
+		x[i] = midp[i] + hs;
+		y[i] = 0;
+	}
+	
+	midp[count] = start + count * step;
+	
+	const digits = Math.max(0, -Math.floor(Math.log10(step)) + 1)
+	OPTS.xaxis = { ticks: midp, tickFormatter: function(value, axis) { return value.toFixed(digits); } };
+	
+	for (let i = 0; i < length; i++) {
+		const value = prop.rawValue(i);
+		if (value != null)
+			for (var k = 0; k < count; k++)
+				if (Math.abs(value - x[k]) < hs)
+					y[k]++;
+				else if (Math.abs(value - x[k]) == hs)
+					y[k] += 0.5;
+	}
+
+	for (let i = 0; i < count; i++)
+		xy[i] = [ x[i], y[i] ];
+		
+	DATA[0] = {
+		data: xy,
+		lines: { show: false },
+		bars: { show: true, lineWidth: 0, fill: true, fillColor: COLOR, barWidth: 0.8 * step, align: "center" },
+		points: { show: false },
+		shadowSize: 0,
+		label: prop.getName(true),
+		color: COLOR
+	};
+})()
+
+function init() {
+	$('#xlabel').text(opener.getHistDlg().selected.getName(true));
+	$.plot($("#plot"), DATA, OPTS );
+
+	$(window).resize(function() {
+		$('#plot').text(''); // erase the flot graph, allowing the div to shrink correctly
+		$.plot($('#plot'), DATA, OPTS); // redraw the graph in the correctly sized div
+	});
+}
+</script>
+
+</head>
+<body onload="init();">
+<div id="container">
+	<div id="plot"></div>
+	<div id="xlabel"></div>
+</div>
+</body>
+</html>

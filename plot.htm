@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="styles/plot.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="scripts/jquery.js"></script>
+<script type="text/javascript" src="scripts/jquery.flot.js"></script>
+
+<script id="source" type="text/javascript">
+"use strict";
+const SYMBOLS = opener.SYMBOLS;
+const PROPS = opener.getPlotDlg().selected;
+const COLORS = ["red", "blue", "lime", "fuchsia", "aqua", "maroon", "teal", "black"];
+const DATA = new Array(PROPS.length);
+const OPTS = { grid: { hoverable: true } };
+
+(function() {
+	for (var k = 0; k < PROPS.length; k++) {
+		var xy = new Array(SYMBOLS.length);
+		var factor; 
+		
+		if (opener.getPlotDlg().rescale.check.checked) {
+			factor = Math.max( Math.abs(PROPS[k].maxval), Math.abs(PROPS[k].minval) );
+			factor = Math.floor(Math.log(factor) * Math.LOG10E);
+			factor = Math.pow(10.0, -factor);
+		} else
+			factor = 1;
+	
+		for (var i = 0; i < SYMBOLS.length; i++) {
+			var value = PROPS[k].rawValue(i);
+			if (value == null)
+				xy[i] = null;
+			else if (opener.getPlotDlg().log.check.checked)
+				xy[i] = [i+1, Math.log(value) / Math.LN10 ];
+			else
+				xy[i] = [i+1, value * factor ];
+		}
+		
+		DATA[k] = {
+			data: xy,
+			lines: { show: true, fill: false },
+			points: { show: true },
+			shadowSize: 0,
+			label: PROPS[k].getName(true),
+			color: COLORS[k]
+		};
+		
+		if (factor != 1)
+			DATA[k].label +=  " X " + factor;
+	}
+	
+	
+	if (opener.getPlotDlg().log.check.checked) {
+		let max = Number.MIN_VALUE;
+		for (let k = 0; k < PROPS.length; k++)
+			if (max < PROPS[k].maxval)
+				max = PROPS[k].maxval;
+		
+		max = Math.ceil(Math.log(max) / Math.LN10);
+		
+		let min = Number.MAX_VALUE;
+		for (let k = 0; k < PROPS.length; k++)
+			if (min > PROPS[k].minval)
+				min = PROPS[k].minval;
+		
+		min = Math.floor(Math.log(min) / Math.LN10);
+		
+		let ticks = new Array(max - min + 1);
+		for (var m = min; m <= max; m++ )
+			ticks[m - min] = [m, "10<SUP>" + m + "</SUP>"];
+		
+		OPTS.yaxis = { ticks: ticks };
+	}
+})()
+
+function showTooltip(x, y, contents) {
+	$('<div id="tooltip">' + contents + '</div>').css( {
+		position: 'absolute',
+		display: 'none',
+		top: y + 5,
+		left: x + 5
+	}).appendTo("body").fadeIn(200);
+}
+
+function plotHover(event, pos, item) {
+	$("#tooltip").remove();
+	if (item) {
+		//let x = item.datapoint[0].toFixed(2);
+		//let y = item.datapoint[1].toFixed(2);
+		showTooltip(item.pageX, item.pageY, SYMBOLS[item.datapoint[0] - 1]);
+	}
+}
+
+function init() {
+	$('#xlabel').text(opener.T.atomicnumber);
+	$.plot($("#plot"), DATA, OPTS );
+	$("#plot").bind("plothover", plotHover);
+
+	$(window).resize(function() {
+		$('#plot').text(''); // erase the flot graph, allowing the div to shrink correctly
+		$.plot($('#plot'), DATA, OPTS); // redraw the graph in the correctly sized div
+	});
+}
+</script>
+
+</head>
+<body onload="init();">
+<div id="container">
+	<div id="plot"></div>
+	<div id="xlabel"></div>
+</div>
+</body>
+</html>
