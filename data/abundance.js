@@ -1,4 +1,6 @@
-Properties.add("abundearth",
+"use strict";
+
+PROPERTIES.add("abundearth",
 [
 1.40,//H
 8e-6,//He
@@ -121,7 +123,7 @@ source: ("http://en.wikipedia.org/wiki/Abundances_of_the_elements_(data_page)").
 
 //=======================================================================================
 
-Properties.add("abundocean",
+PROPERTIES.add("abundocean",
 [
 108,//H
 7e-9,//He
@@ -244,7 +246,7 @@ source: ("http://en.wikipedia.org/wiki/Abundances_of_the_elements_(data_page)").
 
 //=======================================================================================
 
-Properties.add("abunduniv",
+PROPERTIES.add("abunduniv",
 [
 750,//H
 230,//He
@@ -368,7 +370,7 @@ abundance: true
 
 //=======================================================================================
 
-Properties.add("abundhuman",
+PROPERTIES.add("abundhuman",
 [
 100,//H
 null,//He

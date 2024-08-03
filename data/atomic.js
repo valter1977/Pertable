@@ -1,4 +1,6 @@
-Properties.add("atomweight",
+"use strict";
+
+PROPERTIES.add("atomweight",
 [
 1.00794,//H
 4.002602,//He
@@ -119,7 +121,7 @@ category: "generalprop"
 }
 );
 
-Properties.add("electronconf",
+PROPERTIES.add("electronconf",
 [
 "1s<SUP>1</SUP>",
 "1s<SUP>2</SUP>",
@@ -249,7 +251,7 @@ category: "atomicprop"
 
 //=========================================================================================
 
-Properties.add("elneg",
+PROPERTIES.add("elneg",
 [
 2.20,
 null, 
@@ -371,7 +373,7 @@ category: "atomicprop"
 
 //=====================================================================================
 
-Properties.add("oxidation",
+PROPERTIES.add("oxidation",
 [
 "-1,+1",//H
 null,//He
@@ -495,7 +497,7 @@ format: function(value) { return value.replace("-", "&#8211;"); }
 
 //=====================================================================================
 
-Properties.add("ionizenergy",
+PROPERTIES.add("ionizenergy",
 [
  13.5984,//H
  24.5874,//He
@@ -619,7 +621,7 @@ Properties.add("ionizenergy",
 
 //=========================================================================================
 
-Properties.add("affinity",
+PROPERTIES.add("affinity",
 [
  0.754195,//H
  null,//He
@@ -743,7 +745,7 @@ category: "atomicprop"
 
 //===============================================================================
 
-Properties.add("covalentradius",
+PROPERTIES.add("covalentradius",
 [
 37,
 32,
@@ -866,7 +868,7 @@ source: ("http://www.webelements.com/periodicity/covalent_radius/").blank()
 
 //====================================================================================
 
-Properties.add("empiricradius",
+PROPERTIES.add("empiricradius",
 [
 25,
 null,
@@ -989,7 +991,7 @@ source: "J.C. Slater, J. Chem. Phys. 39 (1964), 3199"
 
 //===============================================================================
 
-Properties.add("calcradius",
+PROPERTIES.add("calcradius",
 [
 53,
 31,

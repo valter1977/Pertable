@@ -67,9 +67,9 @@ const PERTAB = (function() {
 			this.addFoot( CloseBtn(T.close) ).addIcon( CloseIcon() );
 			const grid = Grid(3).hFill().cellSpace(1).cellPad(3);
 			this.addContent(grid);
-			Properties.restart();
-			while (Properties.next()) {
-				const prop = Properties.get();
+			PROPERTIES.restart();
+			while (PROPERTIES.next()) {
+				const prop = PROPERTIES.get();
 				grid.addCell(true).horAlign("right").setWrap(false).html( prop.getName() + ":" );
 				grid.addCell(false).horAlign("left").hFill().setWrap(false).html( prop.formatWithUnit(k) );
 				const cell = grid.addCell();
@@ -109,16 +109,16 @@ const PERTAB = (function() {
 	}
 	
 	function showScaleBar(show) {
-		var str = '';
+		let str = '';
 		if (show) {
 			str = '<table cellpadding="0" cellspacing="0" border="0"><tr>';
-			for (var x = 0.0; x <= 1.0; x+= 0.02)
-				str += '<td bgcolor="' + Colormaps.selected.apply(x) + '">&nbsp;</td>'
+			for (let x = 0.0; x <= 1.0; x+= 0.02)
+				str += '<td bgcolor="' + COLORMAP(x) + '">&nbsp;</td>'
 	
 			str += '</tr></table>';
 		}
 		$('#scalebar').html(str);
-		Properties.showRange(show);
+		PROPERTIES.showRange(show);
 	}
 	
 	//atomic number n >= 1
@@ -132,7 +132,7 @@ const PERTAB = (function() {
 	}
 
 	Cell.prototype.fillContent = function() {
-		var n = this.getAtomNumber();
+		const n = this.getAtomNumber();
 		this.link = $('<span>').addClass('symbol').text(this.getSymbol()).click(clickSymbol).mouseover(symbolMouseOver).get(0);
 		this.link.atomNumber = n;
 		this.info = $('<div>').addClass('info').get(0);
@@ -204,10 +204,8 @@ const PERTAB = (function() {
 		},
 		
 		updateColors: function() {
-			//console.log(GROUPS.isSelected());
 			if (GROUPS.isSelected()) {
-				for (var i = 0; i < cells.length; i++) {
-					//console.log(i + ".   " + GROUPS.selectedContain(i));
+				for (let i = 0; i < cells.length; i++) {
 					if ( GROUPS.selectedContain(i) )
 						cells[i].highlight();
 					else
@@ -215,16 +213,16 @@ const PERTAB = (function() {
 				}
 						
 				showScaleBar(false);
-			} else if (Properties.selected && Properties.selected.numeric && Colormaps.selected) {
-				if (Colormaps.scale == LogScale && Properties.selected.minval <= 0.0) {
+			} else if (PROPERTIES.selected && PROPERTIES.selected.numeric && COLORMAP) {
+				if (SCALE == LOG_SCALE && PROPERTIES.selected.minval <= 0.0) {
 					Message(T.logerror).showModal();
-					Colormaps.scale = LinearScale;
+					SCALE = LINEAR_SCALE;
 				}
 	
 				for (let i = 0; i < cells.length; i++) {
-					const value = Properties.selected.rawValue(i);
+					const value = PROPERTIES.selected.rawValue(i);
 					if (value)
-						cells[i].setColor( Colormaps.selected.apply( Colormaps.scale( value, Properties.selected.minval, Properties.selected.maxval ) ) );
+						cells[i].setColor(COLORMAP(SCALE(value, PROPERTIES.selected.minval, PROPERTIES.selected.maxval)));
 					else
 						cells[i].resetColor();
 				}
@@ -238,16 +236,16 @@ const PERTAB = (function() {
 		},
 		
 		displayProperty: function() {
-			if (Properties.selected == null) {
+			if (PROPERTIES.selected === null) {
 				for (let i = 0; i < cells.length; i++)
 					cells[i].setInfo();
 					
 				$("#property").html('');
 			} else {
 				for (let i = 0; i < cells.length; i++)
-					cells[i].setInfo( Properties.selected.format(i) );
+					cells[i].setInfo( PROPERTIES.selected.format(i) );
 					
-				$("#property").html( Properties.selected.getName(true, false) );
+				$("#property").html( PROPERTIES.selected.getName(true, false) );
 			}
 		},
 		
@@ -257,7 +255,7 @@ const PERTAB = (function() {
 		},
 		
 		getSearchDlg: function() {
-			if (searchDlg == null) {
+			if (searchDlg === null) {
 				searchDlg = Dialogs.create();
 				searchDlg.setWidth("15em");
 				editName = Edit().onChange(findByName);

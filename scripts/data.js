@@ -1,9 +1,9 @@
 "use strict";
 
-var Properties = (function(){
-	var categories = ["generalprop", "atomicprop", "physicalprop", "abundprop", "otherprop"];
-	var list = [];
-	var currentIndex = -1;
+const PROPERTIES = (function(){
+	const categories = ["generalprop", "atomicprop", "physicalprop", "abundprop", "otherprop"];
+	const list = [];
+	let currentIndex = -1;
 	
 	function compare(a,b) {
 		if (a.order > b.order) return 1;
@@ -20,8 +20,8 @@ var Properties = (function(){
 	}
 		
 	function Prop(key, data, options) {
-		var values;
-		var notes = new Array(SYMBOLS.length);
+		let values;
+		const notes = new Array(SYMBOLS.length);
 		
 		this.key = key;
 		if (Array.isArray(data))
@@ -32,7 +32,7 @@ var Properties = (function(){
 				values[i] = data(i + 1);
 		}
 		
-		for (var i = 0; i < SYMBOLS.length; i++)
+		for (let i = 0; i < SYMBOLS.length; i++)
 			if ($.isPlainObject(values[i])) {
 				notes[i] = values[i].note;
 				values[i] = values[i].value;
@@ -42,7 +42,7 @@ var Properties = (function(){
 			return values[i];
 		}
 
-		if (options == undefined)
+		if (options === undefined)
 			options = {};
 		
 		if ("numeric" in options)
@@ -52,14 +52,14 @@ var Properties = (function(){
 			
 		if (this.numeric) {
 			this.minval = Number.MAX_VALUE;
-			for (var i = 0; i < SYMBOLS.length; i++)
+			for (let i = 0; i < SYMBOLS.length; i++)
 				if (values[i] && values[i] < this.minval) {
 					this.minval = values[i];
 					this.lowIndex = i;
 				}
 			
 			this.maxval = Number.MIN_VALUE;
-			for (var i = 0; i < SYMBOLS.length; i++)
+			for (let i = 0; i < SYMBOLS.length; i++)
 				if (values[i] && values[i] > this.maxval) {
 					this.maxval = values[i];
 					this.highIndex = i;
@@ -93,7 +93,7 @@ var Properties = (function(){
 		if ("missing" in options) {
 			this.missingValue = options.missing;
 		} else
-			this.missingValue = Properties.defaultMissingValue;
+			this.missingValue = PROPERTIES.defaultMissingValue;
 		
 		if ("format" in options)
 			this.formatNonNull = options.format;
@@ -103,26 +103,26 @@ var Properties = (function(){
 			this.formatNonNull = formatNonNumeric;
 			
 		this.format = function(i) {
-			var value = values[i];
-			if (value == null)
+			const value = values[i];
+			if (value === null)
 				return APP.trans(this.missingValue);
-			else {
-				var res = this.formatNonNull(value);
-				if (notes[i])
-					res = '<span class="data-note" onmouseover="Tooltip(\'' + APP.trans(notes[i]) + '\').showAt(this);">' + res + '*</span>'
-				return res;	
-			}
+			
+			let res = this.formatNonNull(value);
+			if (notes[i])
+				res = '<span class="data-note" onmouseover="Tooltip(\'' + APP.trans(notes[i]) + '\').showAt(this);">' + res + '*</span>'
+			return res;	
 		}
 	}
 	
 	Prop.prototype.formatWithUnit = function(i) {
-		var value = this.rawValue(i);
-		if (value == null)
+		const value = this.rawValue(i);
+		if (value === null)
 			return APP.trans(this.missingValue);
-		else if (this.unit)
+		
+		if (this.unit)
 			return this.formatNonNull(value) + " " + this.unit;
-		else
-			return this.formatNonNull(value);
+
+		return this.formatNonNull(value);
 	}
 	
 	Prop.prototype.precision = 6;
@@ -141,13 +141,10 @@ var Properties = (function(){
 	}
 	
 	Prop.prototype.getName = function(withunit, newline) {
-		if (!withunit || this.unit == undefined)
+		if (!withunit || this.unit === undefined)
 			return T[this.key];
 	
-		if (newline)
-			return T[this.key] + "<br>[" + this.unit + "]";
-		else
-			return T[this.key] + " [" + this.unit + "]";
+		return newline ? T[this.key] + "<br>[" + this.unit + "]" : T[this.key] + " [" + this.unit + "]";
 	}
 								 
 	return {
@@ -173,85 +170,81 @@ var Properties = (function(){
 		},
 		
 		showRange: function(show) {
-			show = (show == undefined || show);
+			show = (show === undefined || show);
 			$("#minvalue").html( show ? this.selected.formatMin() : "" );
 			$("#maxvalue").html( show ? this.selected.formatMax() : "" );
 		}
 	};
 })();
 
-Properties.add("name", SYMBOLS, { numeric: false, category: "generalprop",
+PROPERTIES.add("name", SYMBOLS, { numeric: false, category: "generalprop",
 				 	format: function(value) { return T[value]; }
 				});
 
-Properties.add("atomicnumber", function(i) { return i; }, {
+PROPERTIES.add("atomicnumber", function(i) { return i; }, {
 					info: "atomicnumberinfo", category: "generalprop"
 				});
-
-var Colormaps = [];
 
 function Colormap(label, func) {
 	this.label = label;
 	this.apply = func;
 }
 
-function RegisterColormap(label, func) {
-	Colormaps.push(new Colormap(label, func));
-	if (Colormaps.selected == undefined)
-		Colormaps.selected = Colormaps[0];
-}
+/*function RegisterColormap(label, func) {
+	COLORMAPS.push(new Colormap(label, func));
+	if (COLORMAPS.selected === undefined)
+		COLORMAPS.selected = COLORMAPS[0];
+}*/
 
-RegisterColormap("rainbow",
-				function(x) {
-					var m;
-					var y;
-					if (x < 0.5) {
-						x = 2.0 * x;
-						y = 1.0 - x;
-						x = Math.sqrt(x);
-						y = Math.sqrt(y);
-						m = Math.max(x, y);
-						return RGB2HTML( 0.0, x / m, y / m);
-					} else {
-						x = 2.0 * x - 1.0;
-						y = 1.0 - x;
-						x = Math.sqrt(x);
-						y = Math.sqrt(y);
-						m = Math.max(x, y);
-						return RGB2HTML( x / m, y / m, 0.0);
-					}
-				});
+const RAINBOW = function(x) {
+	if (x < 0.5) {
+		x = 2.0 * x;
+		let y = 1.0 - x;
+		x = Math.sqrt(x);
+		y = Math.sqrt(y);
+		let m = Math.max(x, y);
+		return RGB2HTML( 0.0, x / m, y / m);
+	} else {
+		x = 2.0 * x - 1.0;
+		let y = 1.0 - x;
+		x = Math.sqrt(x);
+		y = Math.sqrt(y);
+		let m = Math.max(x, y);
+		return RGB2HTML( x / m, y / m, 0.0);
+	}
+};
 
-RegisterColormap("yellow",
-				function(x) {
-					var y;
-					var m;
-					y = Math.sqrt(1.0 - x + 0.1);
-					x = Math.sqrt(x + 0.2);
-					m = Math.max(x, y);
-					return RGB2HTML( x / m, y / m, 0.0);
-				});
+RAINBOW.key = 'rainbow';
 
-RegisterColormap("red",
-				function(x) {
-					return RGB2HTML( 1, 1 - x, 1 - x);
-				});
+const YELLOW = function(x) {
+	const y = Math.sqrt(1.0 - x + 0.1);
+	x = Math.sqrt(x + 0.2);
+	const m = Math.max(x, y);
+	return RGB2HTML( x / m, y / m, 0.0);
+};
+
+YELLOW.key = 'yellow';
+
+const RED = function(x) { return RGB2HTML( 1, 1 - x, 1 - x); };
+
+RED.key = 'red';
 
 /*RegisterColormap("Grey",
 				function(x) {
 					return RGB2HTML( x, x, x);
 				});*/
 
-
-function LinearScale(x, min, max) {
+const LINEAR_SCALE = function(x, min, max) {
 	return (x - min) / (max - min);
-}
+};
 
-function LogScale(x, min, max) {
+const LOG_SCALE = function(x, min, max) {
 	return (Math.log(x) - Math.log(min)) / (Math.log(max) - Math.log(min));
-}
+};
 
-Colormaps.scale = LinearScale;
+var COLORMAP = RAINBOW;
+
+var SCALE = LINEAR_SCALE;
 
 var PropInfoIcon = (function(){
 	function iconClick() {
@@ -288,14 +281,14 @@ var getDataDlg = (function() {
 	var list;
 	
 	function clearClick(){
-		if (Properties.selected) {
+		if (PROPERTIES.selected) {
 			list.setSelected(null);
 			selectionChange();
 		}
 	}
 	
 	function selectionChange() {
-		Properties.selected = list.getSelectedObj();
+		PROPERTIES.selected = list.getSelectedObj();
 		PERTAB.displayProperty();
 		if (GROUPS.isSelected())
 			GROUPS.clearSelection();
@@ -304,7 +297,7 @@ var getDataDlg = (function() {
 	}
 	
 	return function() {
-		if (dlg == null) {
+		if (dlg === null) {
 			dlg = Dialogs.create();
 			dlg.setWidth("20em");
 			dlg.setInit(function() {
@@ -313,9 +306,9 @@ var getDataDlg = (function() {
 				list = RadioList(true).setScroll("10em").onSelChange(selectionChange);
 				this.addContent( list );
 				var cat = "";
-				Properties.restart();
-				while (Properties.next()) {
-					var prop = Properties.get();
+				PROPERTIES.restart();
+				while (PROPERTIES.next()) {
+					var prop = PROPERTIES.get();
 					if (prop.category != cat) {
 						cat = prop.category;
 						list.newregion(T[cat]);
@@ -325,7 +318,7 @@ var getDataDlg = (function() {
 						list.getLast().append( PropInfoIcon(prop) );
 				}
 			
-				list.setSelectedObj( Properties.selected );
+				list.setSelectedObj( PROPERTIES.selected );
 			});
 		}
 
@@ -336,40 +329,41 @@ var getDataDlg = (function() {
 
 
 var getColorDlg = (function() {
-	var dlg = null;
-	var scaling;
-	var map;
+	let dlg = null;
+	let scaling;
+	let map;
 	
 	function selectionChange() {
-		Colormaps.scale = scaling.getSelected().getObj();
-		Colormaps.selected = map.getSelected().getObj();
+		SCALE = scaling.getSelected().getObj();
+		COLORMAP = map.getSelected().getObj();
 		
-		if (Properties.selected && Properties.selected.numeric) {
-			if (Colormaps.selected && GROUPS.isSelected())
-				getGroupDlg().clearSelection();
+		if (PROPERTIES.selected && PROPERTIES.selected.numeric) {
+			if (COLORMAP && GROUPS.isSelected())
+				GROUPS.clearSelection();
 			else if (!GROUPS.isSelected())
 				PERTAB.updateColors();
-		} else if (Colormaps.selected != null)
+		} else if (COLORMAP)
 			Message(T.selectdataforcolormap).showModalAt(scaling);
 	};
 	
-	return function(){
-		if (dlg == null) {
+	return function() {
+		if (dlg === null) {
 			dlg = Dialogs.create();
 			dlg.setWidth("11em");
 			dlg.setInit(function() {
 				this.setTitle(T.colormap).addFoot( HideBtn() ).addIcon( HideIcon() );
 				
 				scaling = RadioList().setHint(T.scalinghint).onSelChange(selectionChange);
-				scaling.add(T.linear, LinearScale);
-				scaling.add(T.log, LogScale);
-				scaling.setSelectedObj( Colormaps.scale );
+				scaling.add(T.linear, LINEAR_SCALE);
+				scaling.add(T.log, LOG_SCALE);
+				scaling.setSelectedObj( LINEAR_SCALE );
 				
 				map = RadioList().setHint(T.colormaphint).onSelChange(selectionChange);
 				map.add(T.none, null);
-				for (var i = 0; i < Colormaps.length; i++)
-					map.add(T[Colormaps[i].label], Colormaps[i]);
-				map.setSelectedObj( Colormaps.selected );
+				map.add(T[RAINBOW.key], RAINBOW);
+				map.add(T[YELLOW.key], YELLOW);
+				map.add(T[RED.key], RED);
+				map.setSelectedObj( COLORMAP );
 				
 				this.addContent([ Heading(T.scaling + ":"), scaling, Heading(T.colormap + ":"), map ]);
 			});
@@ -406,7 +400,7 @@ var getPlotDlg = (function() {
 	}
 	
 	return function(){
-		if (dlg == null) {
+		if (dlg === null) {
 			dlg = Dialogs.create();
 			dlg.setWidth("22em");
 			dlg.setInit(function() {
@@ -414,9 +408,9 @@ var getPlotDlg = (function() {
 				this.addFoot( [Button(T.clear, clearClick), Button(T.ok, okClick), HideBtn(T.cancel)] );
 				list = CheckList(true).setScroll("15em").margBottom("6px");
 				var cat = "";
-				Properties.restart();
-				while (Properties.next()) {
-					var prop = Properties.get();
+				PROPERTIES.restart();
+				while (PROPERTIES.next()) {
+					var prop = PROPERTIES.get();
 					if (prop.numeric) {
 						if (prop.category != cat) {
 							cat = prop.category;
@@ -459,7 +453,7 @@ var getListDlg = (function() {
 	}
 	
 	return function(){
-		if (dlg == null) {
+		if (dlg === null) {
 			dlg = Dialogs.create();
 			dlg.setWidth("24em");
 			combo = new Array(count);
@@ -475,9 +469,9 @@ var getListDlg = (function() {
 					combo[i].addItem(T.none, null);
 					combo[i].addItem(T.symbol,  { format: function(index) { return SYMBOLS[index]; },
 												getName: function() { return T.symbol; } } );
-					Properties.restart();
-					while (Properties.next()) {
-						var prop = Properties.get();
+					PROPERTIES.restart();
+					while (PROPERTIES.next()) {
+						var prop = PROPERTIES.get();
 						combo[i].addItem(prop.getName(), prop);
 					}
 						
@@ -551,7 +545,7 @@ var getHistDlg = (function() {
 	}
 	
 	return function(){
-		if (dlg == null) {
+		if (dlg === null) {
 			dlg = Dialogs.create();
 			dlg.setWidth("20em");
 			editStart = Edit();
@@ -560,9 +554,9 @@ var getHistDlg = (function() {
 			dlg.setInit(function() {
 				list = RadioList(true).setScroll("15em").onItemClick(itemClick)
 				var cat = "";
-				Properties.restart();
-				while (Properties.next()) {
-					var prop = Properties.get();
+				PROPERTIES.restart();
+				while (PROPERTIES.next()) {
+					var prop = PROPERTIES.get();
 					if (prop.numeric) {
 						if (prop.category != cat) {
 							cat = prop.category;

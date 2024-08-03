@@ -37,7 +37,7 @@ var APP = (function() {
 	
 	function flagClick() {
 		if (setLanguage(this.langKey)) {
-			Properties.sort();
+			PROPERTIES.sort();
 			PERTAB.displayProperty();
 			PERTAB.setHints();
 			Dialogs.reinit(); //rebuilds the content of all dialogs
@@ -103,7 +103,7 @@ var APP = (function() {
 	}
 
 	function getSettingsDlg(){
-		if (dlg == null) {
+		if (dlg === null) {
 			dlg = Dialogs.create();
 			dlg.setWidth("12em");
 			dlg.setInit(function() {
@@ -122,31 +122,31 @@ var APP = (function() {
 	}
 	
 	function numberFormatUpdated() {
-		if (Properties.selected && Properties.selected.numeric) {
+		if (PROPERTIES.selected && PROPERTIES.selected.numeric) {
 			PERTAB.displayProperty();
-			if (Colormaps.selected && !GROUPS.isSelected())
-				Properties.showRange();
+			if (COLORMAP && !GROUPS.isSelected())
+				PROPERTIES.showRange();
 		}
 		Dialogs.reinit("elem");
 	}
 	
 	function fullPrecisionClick() {
-		DefaultNumberFormat.setFullPrec();
+		NUMBER_FORMAT.setFullPrec();
 		numberFormatUpdated();
 	}
 
 	function limitPrecisionClick() {
-		DefaultNumberFormat.setPrecision(4);
+		NUMBER_FORMAT.setPrecision(4);
 		numberFormatUpdated();
 	}
 
 	function compFormatClick() {
-		DefaultNumberFormat.setCompFmt();
+		NUMBER_FORMAT.setCompFmt();
 		numberFormatUpdated();	
 	}
 
 	function sciFormatClick() {
-		DefaultNumberFormat.setSciFmt();
+		NUMBER_FORMAT.setSciFmt();
 		numberFormatUpdated();
 	}
 	
@@ -160,7 +160,7 @@ var APP = (function() {
 			loadScripts( [ "groups/state.js", "groups/metals.js", "groups/main.js",	"groups/s-block.js",
 							"groups/p-block.js", "groups/transition.js", "groups/other.js", "data/atomic.js",
 							"data/physical.js", "data/abundance.js", "data/other.js"],
-						function() { loadingComplete = true; Properties.sort(); });
+						function() { loadingComplete = true; PROPERTIES.sort(); });
 		},
 		
 		localize: function(key, dict) {

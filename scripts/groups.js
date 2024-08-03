@@ -107,7 +107,7 @@ const GROUPS = (function() {
 		},
 		
 		getDlg: function() {
-			if (dlg == null){
+			if (dlg === null){
 				dlg = Dialogs.create();
 				dlg.setWidth("25em");
 				dlg.setInit(function() {

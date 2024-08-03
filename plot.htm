@@ -15,9 +15,9 @@ const DATA = new Array(PROPS.length);
 const OPTS = { grid: { hoverable: true } };
 
 (function() {
-	for (var k = 0; k < PROPS.length; k++) {
-		var xy = new Array(SYMBOLS.length);
-		var factor; 
+	for (let k = 0; k < PROPS.length; k++) {
+		const xy = new Array(SYMBOLS.length);
+		let factor; 
 		
 		if (opener.getPlotDlg().rescale.check.checked) {
 			factor = Math.max( Math.abs(PROPS[k].maxval), Math.abs(PROPS[k].minval) );
@@ -26,9 +26,9 @@ const OPTS = { grid: { hoverable: true } };
 		} else
 			factor = 1;
 	
-		for (var i = 0; i < SYMBOLS.length; i++) {
-			var value = PROPS[k].rawValue(i);
-			if (value == null)
+		for (let i = 0; i < SYMBOLS.length; i++) {
+			let value = PROPS[k].rawValue(i);
+			if (value === null)
 				xy[i] = null;
 			else if (opener.getPlotDlg().log.check.checked)
 				xy[i] = [i+1, Math.log(value) / Math.LN10 ];

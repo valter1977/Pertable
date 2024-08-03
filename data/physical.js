@@ -1,4 +1,6 @@
-Properties.add("density",
+"use strict";
+
+PROPERTIES.add("density",
 [
 0.08988,
 0.1785,
@@ -122,7 +124,7 @@ null
 
 //===================================================================================================
 
-MeltingPoints = [ //separately defined for groups
+const MeltingPoints = [ //separately defined for groups
 14.01,  
 0.95,
 453.69, 
@@ -236,7 +238,7 @@ null,
 null
 ];
 
-Properties.add("meltingpoint", MeltingPoints,
+PROPERTIES.add("meltingpoint", MeltingPoints,
 {
 unit: "K",
 category: "physicalprop",
@@ -247,7 +249,7 @@ temperature: true
 
 //================================================================================
 
-BoilingPoints = [ //separately defined for groups
+const BoilingPoints = [ //separately defined for groups
 20.28, 
 4.22,  
 1615,  
@@ -361,7 +363,7 @@ null,
 null
 ];
 
-Properties.add("boilingpoint", BoilingPoints,
+PROPERTIES.add("boilingpoint", BoilingPoints,
 {
 unit: "K",
 category: "physicalprop",
@@ -372,7 +374,7 @@ temperature: true
 
 //===================================================================================
 
-Properties.add("heatcap",
+PROPERTIES.add("heatcap",
 [
 28.836,//H
 20.786,//He
@@ -495,7 +497,7 @@ source: ("http://en.wikipedia.org/wiki/Heat_capacities_of_the_elements_(data_pag
 //==================================================================================
 
 
-Properties.add("thermalcond",
+PROPERTIES.add("thermalcond",
 [
 0.1805,//H
 0.1513,//He
@@ -618,7 +620,7 @@ source: ("http://en.wikipedia.org/wiki/Thermal_conductivities_of_the_elements_(d
 
 //===================================================================================
 
-Properties.add("heatfusion",
+PROPERTIES.add("heatfusion",
 [
 0.117,//H
 0.0138,//He
@@ -741,7 +743,7 @@ source: ("http://en.wikipedia.org/wiki/Heats_of_fusion_of_the_elements_(data_pag
 
 //===================================================================================
 
-Properties.add("electrcond",
+PROPERTIES.add("electrcond",
 [
  null,//H
  null,//He
@@ -864,7 +866,7 @@ source: ("http://environmentalchemistry.com/yogi/periodic/electrical.html").blan
 
 //======================================================
 
-Properties.add("mohshardness",
+PROPERTIES.add("mohshardness",
 [
 null,//H
 null,//He

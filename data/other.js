@@ -1,4 +1,6 @@
-Properties.add("crystalstruct",
+"use strict";
+
+PROPERTIES.add("crystalstruct",
 [
 null,//H
 null,//He
@@ -121,7 +123,7 @@ source: ("http://en.wikipedia.org/wiki/Periodic_table_(crystal_structure)").blan
 }
 );
 
-Properties.add("discovery",
+PROPERTIES.add("discovery",
 [
  1766,//H
  1868,//He
@@ -242,7 +244,7 @@ format: function(value) { return value.toString(); }
 }
 );
 
-Properties.add("discoverer",
+PROPERTIES.add("discoverer",
 [
  "Henry Cavendish",//H
  "Pierre Janssen|Norman Lockyer",//He

@@ -46,7 +46,7 @@ var Layouts = (function() {
 		},
 		
 		getDialog: function() {
-			if (dlg == null) {
+			if (dlg === null) {
 				dlg = Dialogs.create();
 				dlg.setWidth("19em");
 				dlg.setInit( function() {

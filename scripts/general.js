@@ -91,10 +91,10 @@ String.prototype.format = function() {
 };
 
 String.prototype.link = function(options) {
-	if (options == undefined)
+	if (options === undefined)
 		options = {};
 
-	if (options.url == undefined)
+	if (options.url === undefined)
 		options.url = this.split(" ").join("");
 		
 	let out = '<a href="' + options.url + '"';
@@ -116,7 +116,7 @@ String.prototype.blank = function() {
 }
 
 String.prototype.toWikiUrl = function(lang) {
-	if (lang == undefined)
+	if (lang === undefined)
 		lang = "en";
 		
 	return "http://" + lang + ".wikipedia.org/wiki/" + this.split(" ").join("_");		
@@ -136,79 +136,94 @@ String.prototype.wiki = function(options) {
 
 Math.log10 = function(x) { return this.log(x) / this.LN10; };
 
+
+const KEY_PRECISION = 'PRECISION';
+const KEY_USE_SCI_FMT = 'USE_SCIENTIFIC_FORMAT';
+
 function NumberFormat() {
-	this.precision = 4;
+	const p = localStorage.getItem(KEY_PRECISION);
+	this.precision = p ? parseInt(p) : 4;
 	this.low = 0.01;
 	this.high = 1e6;
-	
-	this.setFullPrec = function() { this.precision = 15 };
-	
-	this.setPrecision = function(n) {
-		if (n < 3)
-			this.precision = 3;
-		else if (n > 15)
-			this.precision = 15;
-		else
-			this.precision = n;
-	};
-	
-	this.setFastFmt = function() { this.format = this.formatFast };
-	
-	this.setCompFmt = function() { this.format = this.formatComp };
-	
-	this.setSciFmt = function() { this.format = this.formatSci };
-	
-	this.formatFast = function(x) {
-		if (this.precision >= 15)
-			return x.toString();
-		else
-			return this.toPrecTrim(this.precision);
-	};
-	
-	this.formatComp = function(x) {
-		if (x == 0)
-			return 0;
-		
-		const neg = x < 0;
-		x = Math.abs(x);
-		const m = Math.floor( Math.log10(x) );
-		
-		let res;
-		if (x < this.low || x >= this.high)
-			res = (x / Math.pow(10, m)).toPrecTrim(this.precision) + "e" + m.toString();
-		else if (m + 1 >= this.precision)
-			res = x.toFixed();
-		else
-			res = x.toFixed(this.precision - m - 1).trimZeroes();
-		
-		if (neg) res = "-" + res;
-		return res;
-	};
-	
-	this.formatSci = function(x) {
-		if (x == 0)
-			return 0;
-		
-		const neg = x < 0;
-		x = Math.abs(x);
-		const m = Math.floor( Math.log10(x) );
-
-		let res;
-		if (x < this.low || x >= this.high)
-			res = (x / Math.pow(10, m)).toPrecTrim(this.precision) + "&times;10<SUP>" + m.toString().replace("-", "&#8211;") + "</SUP>";
-		else if (m + 1 >= this.precision)
-			res = x.toFixed();
-		else
-			res = x.toFixed(this.precision - m - 1).trimZeroes();
-		
-		if (neg) res = "&#8211;" + res;
-		return res;
-	};
-	
-	this.format = this.formatComp;
+	this.format = localStorage.getItem(KEY_USE_SCI_FMT) ? this.formatComp : this.formatSci;
 };
 
-let DefaultNumberFormat = new NumberFormat();
+NumberFormat.prototype.setFullPrec = function() {
+	this.precision = 15;
+	localStorage.setItem(KEY_PRECISION, this.precision.toString());
+};
+
+NumberFormat.prototype.setPrecision = function(n) {
+	if (n < 3)
+		this.precision = 3;
+	else if (n > 15)
+		this.precision = 15;
+	else
+		this.precision = n;
+
+	localStorage.setItem(KEY_PRECISION, this.precision.toString());
+};
+
+NumberFormat.prototype.formatFast = function(x) {
+	if (this.precision >= 15)
+		return x.toString();
+	else
+		return x.toPrecTrim(this.precision);
+};
+
+NumberFormat.prototype.formatSci = function(x) {
+	if (x == 0)
+		return 0;
+	
+	const neg = x < 0;
+	x = Math.abs(x);
+	const m = Math.floor( Math.log10(x) );
+
+	let res;
+	if (x < this.low || x >= this.high)
+		res = (x / Math.pow(10, m)).toPrecTrim(this.precision) + "&times;10<SUP>" + m.toString().replace("-", "&#8211;") + "</SUP>";
+	else if (m + 1 >= this.precision)
+		res = x.toFixed();
+	else
+		res = x.toFixed(this.precision - m - 1).trimZeroes();
+	
+	if (neg) res = "&#8211;" + res;
+	return res;
+};
+
+NumberFormat.prototype.formatComp = function(x) {
+	if (x == 0)
+		return 0;
+	
+	const neg = x < 0;
+	x = Math.abs(x);
+	const m = Math.floor( Math.log10(x) );
+	
+	let res;
+	if (x < this.low || x >= this.high)
+		res = (x / Math.pow(10, m)).toPrecTrim(this.precision) + "e" + m.toString();
+	else if (m + 1 >= this.precision)
+		res = x.toFixed();
+	else
+		res = x.toFixed(this.precision - m - 1).trimZeroes();
+	
+	if (neg) res = "-" + res;
+	return res;
+};
+
+NumberFormat.prototype.setFastFmt = function() { this.format = this.formatFast };
+	
+NumberFormat.prototype.setCompFmt = function() {
+	this.format = this.formatComp;
+	localStorage.setItem(KEY_USE_SCI_FMT, 'false');
+};
+	
+NumberFormat.prototype.setSciFmt = function() {
+	this.format = this.formatSci;
+	localStorage.setItem(KEY_USE_SCI_FMT, 'true');
+};
+
+const NUMBER_FORMAT = new NumberFormat();
 
 Number.prototype.toHTML = function(n) {
 	const m = Math.floor( Math.log10(this) );
@@ -228,7 +243,7 @@ Number.prototype.toPrecTrim = function(n) {
 
 Number.prototype.format = function(f) {
 	if (f === undefined)
-		f = DefaultNumberFormat;
+		f = NUMBER_FORMAT;
 
 	return f.format(this);
 }
@@ -254,7 +269,7 @@ Array.prototype.remove = function(obj) {
 
 if (!Array.prototype.indexOf) {
 	Array.prototype.indexOf = function (obj, fromIndex) {
-		if (fromIndex == null)
+		if (fromIndex === null)
 			fromIndex = 0;
 		else if (fromIndex < 0)
 			fromIndex = Math.max(0, this.length + fromIndex);
@@ -281,16 +296,11 @@ function getUrlParamValue( name ) {
 	name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
 	var regex = new RegExp( "[\\?&]" + name + "=([^&#]*)" );
 	var results = regex.exec( window.location.href );
-	return (results == null) ? null : results[1];
+	return (results === null) ? null : results[1];
 }
 
 function getMaxZindex(id) {
-	let parent;
-	if (id == null || id == undefined || id == "")
-		parent = document;
-	else
-		parent = getElementById(id);
-	
+	const parent = id ? getElementById(id) : document;
 	const elements = parent.getElementsByTagName("*");
 	let z = 0;
 
@@ -302,10 +312,10 @@ function getMaxZindex(id) {
 }
 
 function TLink(text, title, url) {
-	if (url == "" || url == null || url == undefined)
-		return '<SPAN TITLE="' + title + '">' + text + '</SPAN>';
-	else
+	if (url)
 		return '<A HREF="' + url + '" TITLE="' + title + '" TARGET="_blank">' + text + '</A>';
+
+	return '<SPAN TITLE="' + title + '">' + text + '</SPAN>';	
 }
 
 const uid = (function(){
@@ -407,13 +417,13 @@ var disableSelect = function(disable) {
 		return; //document not loaded yet
 	
 	if ("unselectable" in body) // Internet Explorer, Opera
-		disableSelect = function(dis) { body.unselectable = (dis == undefined || dis); };
+		disableSelect = function(dis) { body.unselectable = (dis === undefined || dis); };
 	else if (window.getComputedStyle) {
 		var style = window.getComputedStyle(body, null);
 		if ("MozUserSelect" in style) // Firefox
-			disableSelect = function(dis) { body.style.MozUserSelect = (dis == undefined || dis) ? "none" : "text"; };
+			disableSelect = function(dis) { body.style.MozUserSelect = (dis === undefined || dis) ? "none" : "text"; };
 		else if ("webkitUserSelect" in style) // Google Chrome and Safari
-			disableSelect = function(dis) { body.style.webkitUserSelect = (dis == undefined || dis) ? "none" : "text"; };
+			disableSelect = function(dis) { body.style.webkitUserSelect = (dis === undefined || dis) ? "none" : "text"; };
 	} else
 		disableSelect = function(dis) { };
 		
