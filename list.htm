@@ -6,19 +6,19 @@
 <script type="text/javascript" src="scripts/general.js"></script>
 <script type="text/javascript">
 function init() {
-	const props = opener.getListDlg().getSelected();
-	const table = document.getElementById("listing");
-	let row;
-	let cell;
+	var props = opener.getListDlg().getSelected();
+	var table = document.getElementById("listing");
+	var row;
+	var cell;
 	
 	row = table.insertRow(-1);
-	for (let k = 0; k < props.length; k++) {
+	for (var k = 0; k < props.length; k++) {
 		cell = document.createElement("th");
 		cell.innerHTML = props[k].getName(true, true);
 		row.appendChild(cell);
 	}
 	
-	for (let i = 0; i < opener.SYMBOLS.length; i++) {
+	for (var i = 0; i < opener.SYMBOLS.length; i++) {
 	 	row = table.insertRow(-1);
 		for (k = 0; k < props.length; k++)
 			row.insertCell(-1).innerHTML = props[k].format(i);

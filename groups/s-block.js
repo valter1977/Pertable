@@ -1,6 +1,6 @@
 "use strict";
 
-const AlkaliMetals = GROUPS.add("alkali",
+var AlkaliMetals = GROUPS.add("alkali",
 [3,//Li
 11,//Na
 19,//K
@@ -11,7 +11,7 @@ const AlkaliMetals = GROUPS.add("alkali",
 
 //============================================================================
 
-const AlkaliEarthMetals = GROUPS.add("alkaliearth", [
+var AlkaliEarthMetals = GROUPS.add("alkaliearth", [
 4,//Be
 12,//Mg
 20,//Ca

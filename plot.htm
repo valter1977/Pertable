@@ -8,16 +8,16 @@
 
 <script id="source" type="text/javascript">
 "use strict";
-const SYMBOLS = opener.SYMBOLS;
-const PROPS = opener.getPlotDlg().selected;
-const COLORS = ["red", "blue", "lime", "fuchsia", "aqua", "maroon", "teal", "black"];
-const DATA = new Array(PROPS.length);
-const OPTS = { grid: { hoverable: true } };
+var SYMBOLS = opener.SYMBOLS;
+var PROPS = opener.getPlotDlg().selected;
+var COLORS = ["red", "blue", "lime", "fuchsia", "aqua", "maroon", "teal", "black"];
+var DATA = new Array(PROPS.length);
+var OPTS = { grid: { hoverable: true } };
 
 (function() {
-	for (let k = 0; k < PROPS.length; k++) {
-		const xy = new Array(SYMBOLS.length);
-		let factor; 
+	for (var k = 0; k < PROPS.length; k++) {
+		var xy = new Array(SYMBOLS.length);
+		var factor; 
 		
 		if (opener.getPlotDlg().rescale.check.checked) {
 			factor = Math.max( Math.abs(PROPS[k].maxval), Math.abs(PROPS[k].minval) );
@@ -26,8 +26,8 @@ const OPTS = { grid: { hoverable: true } };
 		} else
 			factor = 1;
 	
-		for (let i = 0; i < SYMBOLS.length; i++) {
-			let value = PROPS[k].rawValue(i);
+		for (var i = 0; i < SYMBOLS.length; i++) {
+			var value = PROPS[k].rawValue(i);
 			if (value === null)
 				xy[i] = null;
 			else if (opener.getPlotDlg().log.check.checked)
@@ -51,21 +51,21 @@ const OPTS = { grid: { hoverable: true } };
 	
 	
 	if (opener.getPlotDlg().log.check.checked) {
-		let max = Number.MIN_VALUE;
-		for (let k = 0; k < PROPS.length; k++)
+		var max = Number.MIN_VALUE;
+		for (var k = 0; k < PROPS.length; k++)
 			if (max < PROPS[k].maxval)
 				max = PROPS[k].maxval;
 		
 		max = Math.ceil(Math.log(max) / Math.LN10);
 		
-		let min = Number.MAX_VALUE;
-		for (let k = 0; k < PROPS.length; k++)
+		var min = Number.MAX_VALUE;
+		for (var k = 0; k < PROPS.length; k++)
 			if (min > PROPS[k].minval)
 				min = PROPS[k].minval;
 		
 		min = Math.floor(Math.log(min) / Math.LN10);
 		
-		let ticks = new Array(max - min + 1);
+		var ticks = new Array(max - min + 1);
 		for (var m = min; m <= max; m++ )
 			ticks[m - min] = [m, "10<SUP>" + m + "</SUP>"];
 		
@@ -85,8 +85,8 @@ function showTooltip(x, y, contents) {
 function plotHover(event, pos, item) {
 	$("#tooltip").remove();
 	if (item) {
-		//let x = item.datapoint[0].toFixed(2);
-		//let y = item.datapoint[1].toFixed(2);
+		//var x = item.datapoint[0].toFixed(2);
+		//var y = item.datapoint[1].toFixed(2);
 		showTooltip(item.pageX, item.pageY, SYMBOLS[item.datapoint[0] - 1]);
 	}
 }

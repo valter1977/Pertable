@@ -1,9 +1,9 @@
 "use strict";
 
-const PROPERTIES = (function(){
-	const categories = ["generalprop", "atomicprop", "physicalprop", "abundprop", "otherprop"];
-	const list = [];
-	let currentIndex = -1;
+var PROPERTIES = (function(){
+	var categories = ["generalprop", "atomicprop", "physicalprop", "abundprop", "otherprop"];
+	var list = [];
+	var currentIndex = -1;
 	
 	function compare(a,b) {
 		if (a.order > b.order) return 1;
@@ -20,8 +20,8 @@ const PROPERTIES = (function(){
 	}
 		
 	function Prop(key, data, options) {
-		let values;
-		const notes = new Array(SYMBOLS.length);
+		var values;
+		var notes = new Array(SYMBOLS.length);
 		
 		this.key = key;
 		if (Array.isArray(data))
@@ -32,7 +32,7 @@ const PROPERTIES = (function(){
 				values[i] = data(i + 1);
 		}
 		
-		for (let i = 0; i < SYMBOLS.length; i++)
+		for (var i = 0; i < SYMBOLS.length; i++)
 			if ($.isPlainObject(values[i])) {
 				notes[i] = values[i].note;
 				values[i] = values[i].value;
@@ -52,14 +52,14 @@ const PROPERTIES = (function(){
 			
 		if (this.numeric) {
 			this.minval = Number.MAX_VALUE;
-			for (let i = 0; i < SYMBOLS.length; i++)
+			for (var i = 0; i < SYMBOLS.length; i++)
 				if (values[i] && values[i] < this.minval) {
 					this.minval = values[i];
 					this.lowIndex = i;
 				}
 			
 			this.maxval = Number.MIN_VALUE;
-			for (let i = 0; i < SYMBOLS.length; i++)
+			for (var i = 0; i < SYMBOLS.length; i++)
 				if (values[i] && values[i] > this.maxval) {
 					this.maxval = values[i];
 					this.highIndex = i;
@@ -103,11 +103,11 @@ const PROPERTIES = (function(){
 			this.formatNonNull = formatNonNumeric;
 			
 		this.format = function(i) {
-			const value = values[i];
+			var value = values[i];
 			if (value === null)
 				return APP.trans(this.missingValue);
 			
-			let res = this.formatNonNull(value);
+			var res = this.formatNonNull(value);
 			if (notes[i])
 				res = '<span class="data-note" onmouseover="Tooltip(\'' + APP.trans(notes[i]) + '\').showAt(this);">' + res + '*</span>'
 			return res;	
@@ -115,7 +115,7 @@ const PROPERTIES = (function(){
 	}
 	
 	Prop.prototype.formatWithUnit = function(i) {
-		const value = this.rawValue(i);
+		var value = this.rawValue(i);
 		if (value === null)
 			return APP.trans(this.missingValue);
 		
@@ -196,36 +196,36 @@ function Colormap(label, func) {
 		COLORMAPS.selected = COLORMAPS[0];
 }*/
 
-const RAINBOW = function(x) {
+var RAINBOW = function(x) {
 	if (x < 0.5) {
 		x = 2.0 * x;
-		let y = 1.0 - x;
+		var y = 1.0 - x;
 		x = Math.sqrt(x);
 		y = Math.sqrt(y);
-		let m = Math.max(x, y);
+		var m = Math.max(x, y);
 		return RGB2HTML( 0.0, x / m, y / m);
 	} else {
 		x = 2.0 * x - 1.0;
-		let y = 1.0 - x;
+		var y = 1.0 - x;
 		x = Math.sqrt(x);
 		y = Math.sqrt(y);
-		let m = Math.max(x, y);
+		var m = Math.max(x, y);
 		return RGB2HTML( x / m, y / m, 0.0);
 	}
 };
 
 RAINBOW.key = 'rainbow';
 
-const YELLOW = function(x) {
-	const y = Math.sqrt(1.0 - x + 0.1);
+var YELLOW = function(x) {
+	var y = Math.sqrt(1.0 - x + 0.1);
 	x = Math.sqrt(x + 0.2);
-	const m = Math.max(x, y);
+	var m = Math.max(x, y);
 	return RGB2HTML( x / m, y / m, 0.0);
 };
 
 YELLOW.key = 'yellow';
 
-const RED = function(x) { return RGB2HTML( 1, 1 - x, 1 - x); };
+var RED = function(x) { return RGB2HTML( 1, 1 - x, 1 - x); };
 
 RED.key = 'red';
 
@@ -234,11 +234,11 @@ RED.key = 'red';
 					return RGB2HTML( x, x, x);
 				});*/
 
-const LINEAR_SCALE = function(x, min, max) {
+var LINEAR_SCALE = function(x, min, max) {
 	return (x - min) / (max - min);
 };
 
-const LOG_SCALE = function(x, min, max) {
+var LOG_SCALE = function(x, min, max) {
 	return (Math.log(x) - Math.log(min)) / (Math.log(max) - Math.log(min));
 };
 
@@ -329,9 +329,9 @@ var getDataDlg = (function() {
 
 
 var getColorDlg = (function() {
-	let dlg = null;
-	let scaling;
-	let map;
+	var dlg = null;
+	var scaling;
+	var map;
 	
 	function selectionChange() {
 		SCALE = scaling.getSelected().getObj();

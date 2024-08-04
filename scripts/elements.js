@@ -9,22 +9,22 @@ var SYMBOLS = [
 	"Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr",
 	"Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg"];
 
-const PERTAB = (function() {
-	const cells = new Array(SYMBOLS.length);
-	let selected = null;
-	let searchDlg = null;
-	let editName;
-	let editSymbol;
-	let editNumber;
+var PERTAB = (function() {
+	var cells = new Array(SYMBOLS.length);
+	var selected = null;
+	var searchDlg = null;
+	var editName;
+	var editSymbol;
+	var editNumber;
 	
 	function findBySymbol() {
-		const symbol = editSymbol.value.trim().toLowerCase().capitalize();
+		var symbol = editSymbol.value.trim().toLowerCase().capitalize();
 		if (symbol == "") {
 			unselect();
 			return;
 		}
 		
-		const i = SYMBOLS.indexOf(symbol);		
+		var i = SYMBOLS.indexOf(symbol);		
 		if (i >= 0)
 			cells[i].select();
 		else
@@ -32,13 +32,13 @@ const PERTAB = (function() {
 	}
 
 	function findByName() {
-		const name = editName.value.trim().toLowerCase();
+		var name = editName.value.trim().toLowerCase();
 		if (name == "") {
 			unselect();
 			return;
 		}
 		
-		for (let i = 0; i < SYMBOLS.length; i++)
+		for (var i = 0; i < SYMBOLS.length; i++)
 			if (T[SYMBOLS[i]].indexOf(name) == 0) {
 				cells[i].select();
 				return;
@@ -48,7 +48,7 @@ const PERTAB = (function() {
 	}
 	
 	function findByNumber() {
-		const n = parseInt(editNumber.value);
+		var n = parseInt(editNumber.value);
 		if (Number.isNaN(n) || n < 1 || n > SYMBOLS.length)
 			unselect();
 		else
@@ -58,26 +58,26 @@ const PERTAB = (function() {
 	function clickSymbol() {
 		if (!APP.isLoaded()) return;
 		
-		const dlg = Dialogs.create("elem");
+		var dlg = Dialogs.create("elem");
 		dlg.index = this.atomNumber - 1;
 		dlg.setWidth("40em").setScroll("20em");
 		dlg.setInit( function() {
-			const k = this.index;
+			var k = this.index;
 			this.setTitle(T[SYMBOLS[k]].capitalize() + " (" + SYMBOLS[k] + ")");
 			this.addFoot( CloseBtn(T.close) ).addIcon( CloseIcon() );
-			const grid = Grid(3).hFill().cellSpace(1).cellPad(3);
+			var grid = Grid(3).hFill().cellSpace(1).cellPad(3);
 			this.addContent(grid);
 			PROPERTIES.restart();
 			while (PROPERTIES.next()) {
-				const prop = PROPERTIES.get();
+				var prop = PROPERTIES.get();
 				grid.addCell(true).horAlign("right").setWrap(false).html( prop.getName() + ":" );
 				grid.addCell(false).horAlign("left").hFill().setWrap(false).html( prop.formatWithUnit(k) );
-				const cell = grid.addCell();
+				var cell = grid.addCell();
 				if ( prop.info || prop.source )
 					cell.append( PropInfoIcon(prop) );
 			}
 	
-			const groups = GROUPS.allGroupsFor(k);
+			var groups = GROUPS.allGroupsFor(k);
 			grid.addCell(true).horAlign("right").setWrap(false).html( T.groups + ":" );
 			grid.addCell(false).horAlign("left").setWrap(false).html(
 				(groups.length >= 0) ? groups.join("<br>") : Props.defaultMissingValue );
@@ -109,10 +109,10 @@ const PERTAB = (function() {
 	}
 	
 	function showScaleBar(show) {
-		let str = '';
+		var str = '';
 		if (show) {
 			str = '<table cellpadding="0" cellspacing="0" border="0"><tr>';
-			for (let x = 0.0; x <= 1.0; x+= 0.02)
+			for (var x = 0.0; x <= 1.0; x+= 0.02)
 				str += '<td bgcolor="' + COLORMAP(x) + '">&nbsp;</td>'
 	
 			str += '</tr></table>';
@@ -132,7 +132,7 @@ const PERTAB = (function() {
 	}
 
 	Cell.prototype.fillContent = function() {
-		const n = this.getAtomNumber();
+		var n = this.getAtomNumber();
 		this.link = $('<span>').addClass('symbol').text(this.getSymbol()).click(clickSymbol).mouseover(symbolMouseOver).get(0);
 		this.link.atomNumber = n;
 		this.info = $('<div>').addClass('info').get(0);
@@ -172,7 +172,7 @@ const PERTAB = (function() {
 	}
 	
 	
-	for (let i = 0; i < SYMBOLS.length; i++)
+	for (var i = 0; i < SYMBOLS.length; i++)
 		cells[i] = new Cell(i+1);
 
 	function unselect() {
@@ -184,7 +184,7 @@ const PERTAB = (function() {
 	
 	return {
 		fillContent: function() {
-			for (let i = 0; i < cells.length; i++)
+			for (var i = 0; i < cells.length; i++)
 				cells[i].fillContent();
 			
 			$("#info").html(
@@ -205,7 +205,7 @@ const PERTAB = (function() {
 		
 		updateColors: function() {
 			if (GROUPS.isSelected()) {
-				for (let i = 0; i < cells.length; i++) {
+				for (var i = 0; i < cells.length; i++) {
 					if ( GROUPS.selectedContain(i) )
 						cells[i].highlight();
 					else
@@ -219,8 +219,8 @@ const PERTAB = (function() {
 					SCALE = LINEAR_SCALE;
 				}
 	
-				for (let i = 0; i < cells.length; i++) {
-					const value = PROPERTIES.selected.rawValue(i);
+				for (var i = 0; i < cells.length; i++) {
+					var value = PROPERTIES.selected.rawValue(i);
 					if (value)
 						cells[i].setColor(COLORMAP(SCALE(value, PROPERTIES.selected.minval, PROPERTIES.selected.maxval)));
 					else
@@ -228,7 +228,7 @@ const PERTAB = (function() {
 				}
 				showScaleBar(true);
 			} else {
-				for (let i = 0; i < cells.length; i++)
+				for (var i = 0; i < cells.length; i++)
 					cells[i].resetColor();
 				
 				showScaleBar(false);
@@ -237,12 +237,12 @@ const PERTAB = (function() {
 		
 		displayProperty: function() {
 			if (PROPERTIES.selected === null) {
-				for (let i = 0; i < cells.length; i++)
+				for (var i = 0; i < cells.length; i++)
 					cells[i].setInfo();
 					
 				$("#property").html('');
 			} else {
-				for (let i = 0; i < cells.length; i++)
+				for (var i = 0; i < cells.length; i++)
 					cells[i].setInfo( PROPERTIES.selected.format(i) );
 					
 				$("#property").html( PROPERTIES.selected.getName(true, false) );
@@ -264,7 +264,7 @@ const PERTAB = (function() {
 				searchDlg.showFocus = editName;
 				
 				searchDlg.setInit( function() {
-					const grid = Grid(2);
+					var grid = Grid(2);
 					grid.add( [T.name + ":", editName] );
 					grid.add( [T.symbol + ":", editSymbol] );
 					grid.add( [T.atomicnumber + ":", editNumber] );

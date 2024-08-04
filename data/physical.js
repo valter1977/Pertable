@@ -124,7 +124,7 @@ null
 
 //===================================================================================================
 
-const MeltingPoints = [ //separately defined for groups
+var MeltingPoints = [ //separately defined for groups
 14.01,  
 0.95,
 453.69, 
@@ -249,7 +249,7 @@ temperature: true
 
 //================================================================================
 
-const BoilingPoints = [ //separately defined for groups
+var BoilingPoints = [ //separately defined for groups
 20.28, 
 4.22,  
 1615,  

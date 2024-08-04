@@ -9,23 +9,23 @@
 <script id="source" type="text/javascript">
 "use strict";
 
-const COLOR = 'blue';
-const DATA = new Array(1);
-const OPTS = {};
+var COLOR = 'blue';
+var DATA = new Array(1);
+var OPTS = {};
 
 (function() {
-	const prop = opener.getHistDlg().selected;
-	const length = opener.SYMBOLS.length;
-	const start = opener.getHistDlg().start;
-	const step = opener.getHistDlg().step;
-	const hs = 0.5 * step;
-	const count = opener.getHistDlg().count;
-	const midp = new Array(count + 1);
-	const x = new Array(count);
-	const y = new Array(count);
-	const xy = new Array(count);
+	var prop = opener.getHistDlg().selected;
+	var length = opener.SYMBOLS.length;
+	var start = opener.getHistDlg().start;
+	var step = opener.getHistDlg().step;
+	var hs = 0.5 * step;
+	var count = opener.getHistDlg().count;
+	var midp = new Array(count + 1);
+	var x = new Array(count);
+	var y = new Array(count);
+	var xy = new Array(count);
 	
-	for (let i = 0; i < count; i++) {
+	for (var i = 0; i < count; i++) {
 		midp[i] = start + i * step;
 		x[i] = midp[i] + hs;
 		y[i] = 0;
@@ -33,11 +33,11 @@ const OPTS = {};
 	
 	midp[count] = start + count * step;
 	
-	const digits = Math.max(0, -Math.floor(Math.log10(step)) + 1)
+	var digits = Math.max(0, -Math.floor(Math.log10(step)) + 1)
 	OPTS.xaxis = { ticks: midp, tickFormatter: function(value, axis) { return value.toFixed(digits); } };
 	
-	for (let i = 0; i < length; i++) {
-		const value = prop.rawValue(i);
+	for (var i = 0; i < length; i++) {
+		var value = prop.rawValue(i);
 		if (value != null)
 			for (var k = 0; k < count; k++)
 				if (Math.abs(value - x[k]) < hs)
@@ -46,7 +46,7 @@ const OPTS = {};
 					y[k] += 0.5;
 	}
 
-	for (let i = 0; i < count; i++)
+	for (var i = 0; i < count; i++)
 		xy[i] = [ x[i], y[i] ];
 		
 	DATA[0] = {

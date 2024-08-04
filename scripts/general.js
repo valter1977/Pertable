@@ -32,8 +32,8 @@ if (!Array.prototype.slice) {
 		if (end < 0)
 			end += this.length;
 		
-		const result = [];
-		for (let i = begin; i < end; i++)
+		var result = [];
+		for (var i = begin; i < end; i++)
 			result.push(this[i]);
 			
 		return result;
@@ -97,18 +97,18 @@ String.prototype.link = function(options) {
 	if (options.url === undefined)
 		options.url = this.split(" ").join("");
 		
-	let out = '<a href="' + options.url + '"';
+	var result = '<a href="' + options.url + '"';
 	
 	if ("title" in options)
-		out += ' title="' + options.title + '"';
+		result += ' title="' + options.title + '"';
 	
 	if ("cls" in options)
-		out += ' class="' + options.cls + '"';
+		result += ' class="' + options.cls + '"';
 	
 	if (options.blank)
-		out += ' target="_blank"';
+		result += ' target="_blank"';
 	
-	return out + '>' + this + '</a>';
+	return result + '>' + this + '</a>';
 }
 
 String.prototype.blank = function() {
@@ -137,11 +137,11 @@ String.prototype.wiki = function(options) {
 Math.log10 = function(x) { return this.log(x) / this.LN10; };
 
 
-const KEY_PRECISION = 'PRECISION';
-const KEY_USE_SCI_FMT = 'USE_SCIENTIFIC_FORMAT';
+var KEY_PRECISION = 'PRECISION';
+var KEY_USE_SCI_FMT = 'USE_SCIENTIFIC_FORMAT';
 
 function NumberFormat() {
-	const p = localStorage.getItem(KEY_PRECISION);
+	var p = localStorage.getItem(KEY_PRECISION);
 	this.precision = p ? parseInt(p) : 4;
 	this.low = 0.01;
 	this.high = 1e6;
@@ -175,11 +175,11 @@ NumberFormat.prototype.formatSci = function(x) {
 	if (x == 0)
 		return 0;
 	
-	const neg = x < 0;
+	var neg = x < 0;
 	x = Math.abs(x);
-	const m = Math.floor( Math.log10(x) );
+	var m = Math.floor( Math.log10(x) );
 
-	let res;
+	var res;
 	if (x < this.low || x >= this.high)
 		res = (x / Math.pow(10, m)).toPrecTrim(this.precision) + "&times;10<SUP>" + m.toString().replace("-", "&#8211;") + "</SUP>";
 	else if (m + 1 >= this.precision)
@@ -195,11 +195,11 @@ NumberFormat.prototype.formatComp = function(x) {
 	if (x == 0)
 		return 0;
 	
-	const neg = x < 0;
+	var neg = x < 0;
 	x = Math.abs(x);
-	const m = Math.floor( Math.log10(x) );
+	var m = Math.floor( Math.log10(x) );
 	
-	let res;
+	var res;
 	if (x < this.low || x >= this.high)
 		res = (x / Math.pow(10, m)).toPrecTrim(this.precision) + "e" + m.toString();
 	else if (m + 1 >= this.precision)
@@ -223,10 +223,10 @@ NumberFormat.prototype.setSciFmt = function() {
 	localStorage.setItem(KEY_USE_SCI_FMT, 'true');
 };
 
-const NUMBER_FORMAT = new NumberFormat();
+var NUMBER_FORMAT = new NumberFormat();
 
 Number.prototype.toHTML = function(n) {
-	const m = Math.floor( Math.log10(this) );
+	var m = Math.floor( Math.log10(this) );
 	if (this < 0.01 || this >= 1e6)
 		return (this / Math.pow(10, m)).toPrecision(n).trimZeroes() + 
 			"&middot;10<SUP>" + m.toString().replace("-", "&#8211;") + "</SUP>";
@@ -256,8 +256,8 @@ Array.prototype.clear = function() {
 
 Array.prototype.remove = function(obj) {
 	if (this.length > 0) {	
-		const remaining = new Array();
-		for (let i = 0; i < this.length; i++)
+		var remaining = new Array();
+		for (var i = 0; i < this.length; i++)
 			if (this[i] != obj)
 				remaining.push(this[i]);
 
@@ -274,7 +274,7 @@ if (!Array.prototype.indexOf) {
 		else if (fromIndex < 0)
 			fromIndex = Math.max(0, this.length + fromIndex);
 
-		for (let i = fromIndex; i < this.length; i++) {
+		for (var i = fromIndex; i < this.length; i++) {
 			if (this[i] === obj)
 				return i;
 		}
@@ -283,7 +283,7 @@ if (!Array.prototype.indexOf) {
 }
 
 Array.prototype.apply = function(f) {
-	for (let i = 0; i < this.length; i++)
+	for (var i = 0; i < this.length; i++)
 		this[i] = f(this[i]);
 	return this;
 }
@@ -300,11 +300,11 @@ function getUrlParamValue( name ) {
 }
 
 function getMaxZindex(id) {
-	const parent = id ? getElementById(id) : document;
-	const elements = parent.getElementsByTagName("*");
-	let z = 0;
+	var parent = id ? document.getElementById(id) : document;
+	var elements = parent.getElementsByTagName("*");
+	var z = 0;
 
-	for (let i = 0; i < elements.length; i++)
+	for (var i = 0; i < elements.length; i++)
 		if (elements[i].style.zIndex != "")
 			z = Math.max( z, parseInt(elements[i].style.zIndex) );
 		
@@ -318,13 +318,13 @@ function TLink(text, title, url) {
 	return '<SPAN TITLE="' + title + '">' + text + '</SPAN>';	
 }
 
-const uid = (function(){
-	const N = 6;
-	const alphabet = "0123456789abcdefghijklmnopqurstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ";	
+var uid = (function(){
+	var N = 6;
+	var alphabet = "0123456789abcdefghijklmnopqurstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ";	
 
 	return function (){
-		let str = "";
-		for (let i = 0; i < N; i++)
+		var str = "";
+		for (var i = 0; i < N; i++)
 			str += alphabet.charAt( Math.floor(Math.random() * 62) );
 		
 		return str;
@@ -359,7 +359,7 @@ function getAbsTop( obj ) {
 }*/
 
 function loadScript(url, callback) {
-	const script = document.createElement("script");
+	var script = document.createElement("script");
 	script.type = "text/javascript";
 
 	if (callback)
@@ -377,20 +377,20 @@ function loadScript(url, callback) {
 }
 
 function loadScripts(urls, callback) {
-	const total = urls.length;
-	let loaded = 0;
+	var total = urls.length;
+	var loaded = 0;
 	function scriptLoaded() {
 		loaded++;
 		if (loaded == total)
 			callback();
 	}
 	
-	for (let i = 0; i < total; i++)
+	for (var i = 0; i < total; i++)
 		loadScript(urls[i], scriptLoaded);
 }
 
 function loadCss(url) {
-	const link = document.createElement("link");
+	var link = document.createElement("link");
 	link.type = "text/css";
 	link.rel = "stylesheet";
 	link.href = url;
@@ -402,11 +402,14 @@ function setEvtHandler(element, evt, fn) {
 		 fn = new Function(fn);
 	
 	if (evt == "change") {
-		if ('oninput' in element) {
+		if ('oninput' in element)
+			element.oninput = fn;
+		else
+		{
 			element.onkeyup = fn;
 			element.onpaste = fn;
-		} else
-			element.oninput = fn;
+		}
+			
 	} else
 		element["on" + evt] = fn;
 }

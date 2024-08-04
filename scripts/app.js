@@ -2,13 +2,13 @@
 
 var T; //dictionary of the active language; more substantial processing with fallback is implemented by APP.trans()
 var APP = (function() {
-	let dlg = null;
-	let loadingComplete = false;
-	const dictionaries = {};
-	let defaultDict;
-	const regexIntLinks = /<([^\|]*)\|([^\|]*)\|([^>]*)>/g;
-	const regexExtLinks = /<([^\|]*)\|([^>]*)>/g;
-	const strongFormat = /<s ([^>]*)>/g;
+	var dlg = null;
+	var loadingComplete = false;
+	var dictionaries = {};
+	var defaultDict;
+	var regexIntLinks = /<([^\|]*)\|([^\|]*)\|([^>]*)>/g;
+	var regexExtLinks = /<([^\|]*)\|([^>]*)>/g;
+	var strongFormat = /<s ([^>]*)>/g;
 	
 	function processLinks(text) {
 		return text.replace(
@@ -45,10 +45,10 @@ var APP = (function() {
 	}
 	
 	function createFlags() {
-		const container = $("#language");
-		for (let key in dictionaries)
+		var container = $("#language");
+		for (var key in dictionaries)
 			if (dictionaries.hasOwnProperty(key)) {
-				const img = $('<img>').attr('src', 'lang/' + key + '.png').attr('title', key).click(flagClick);
+				var img = $('<img>').attr('src', 'lang/' + key + '.png').attr('title', key).click(flagClick);
 				img.get(0).langKey = key;
 				container.append(img);
 			}
@@ -81,7 +81,7 @@ var APP = (function() {
 	function btnExitClick() { window.open("","_self").close(); };
 
 	function transMainUI() {
-		const container = document.getElementById("toolbar");
+		var container = document.getElementById("toolbar");
 		clearChildNodes(container)
 		
 		container.appendChild( BitBtn("groups", T.groups, btnGroupsClick).setHint(T.grouphint) );

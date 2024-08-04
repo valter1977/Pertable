@@ -1,14 +1,14 @@
 "use strict";
 
-const GROUPS = (function() {
-	const all = [];
-	const selected = [];
-	let dlg = null;
-	let list;
-	let inany;
+var GROUPS = (function() {
+	var all = [];
+	var selected = [];
+	var dlg = null;
+	var list;
+	var inany;
 
 	function infoClick() {
-		const name = this.getObj();
+		var name = this.getObj();
 		Message(name + "info", name).showAt(this);
 	}
 	
@@ -18,17 +18,17 @@ const GROUPS = (function() {
 	}
 	
 	function itemClick() {
-		const listitem = this;
-		const group = listitem.getObj();
+		var listitem = this;
+		var group = listitem.getObj();
 		if (listitem.isChecked() && group.param) {
-			const promptDlg = Prompt(T[group.param.prompt], T[group.param.name], group.param.value);
+			var promptDlg = Prompt(T[group.param.prompt], T[group.param.name], group.param.value);
 			promptDlg.showModalAt(this, function(result){
 				if (result == "cancel") {
 					listitem.setChecked(false);
 					return;
 				}
 				
-				const value = parseFloat(promptDlg.getValue());
+				var value = parseFloat(promptDlg.getValue());
 				if ( Number.isNaN(value) ) {
 					listitem.setChecked(false);
 					return;
@@ -44,8 +44,8 @@ const GROUPS = (function() {
 	
 	function update() {
 		selected.clear();
-		const items = list.getItems();
-		for (let k = 0; k < items.length; k++)
+		var items = list.getItems();
+		for (var k = 0; k < items.length; k++)
 			if ( items[k].isChecked() )
 				selected.push( items[k].getObj() );
 		
@@ -70,7 +70,7 @@ const GROUPS = (function() {
 	}
 	
 	function matchAny(i) {
-		for (let k = 0; k < selected.length; k++)
+		for (var k = 0; k < selected.length; k++)
 			if ( selected[k].contains(i) )
 				return true;
 		
@@ -78,7 +78,7 @@ const GROUPS = (function() {
 	}
 	
 	function matchAll(i) {
-		for (let k = 0; k < selected.length; k++)
+		for (var k = 0; k < selected.length; k++)
 			if ( !(selected[k].contains(i)) )
 				return false;
 		
@@ -93,14 +93,14 @@ const GROUPS = (function() {
 		clearSelection: clearClick,
 		
 		add: function(name, data, options) {
-			const group = new Group(name, data, options);
+			var group = new Group(name, data, options);
 			all.push( group );
 			return group;
 		},
 		
 		allGroupsFor: function(index) {
-			const arr = [];
-			for (let i = 0; i < all.length; i++)
+			var arr = [];
+			for (var i = 0; i < all.length; i++)
 				if ( all[i].contains(index) )
 					arr.push(T[all[i].key].toLowerCase());
 			return arr;
@@ -113,14 +113,14 @@ const GROUPS = (function() {
 				dlg.setInit(function() {
 					this.setTitle(T.groups).addFoot( [Button(T.clear, clearClick), HideBtn()] ).addIcon( HideIcon() );
 					list = CheckList(true).setScroll("10em");
-					for (let i = 0; i < all.length; i++) {
-						const group = all[i];
+					for (var i = 0; i < all.length; i++) {
+						var group = all[i];
 						list.add(T[group.key], group).setChecked(group.isSelected()).onClick(itemClick);
 						if ( APP.hasContent(group.key + "info") )
 							list.getLast().append( InfoIcon(infoClick).setObj(group.key) );
 					}
 				
-					const markType = RadioList().margTop("6px").onItemClick(update);
+					var markType = RadioList().margTop("6px").onItemClick(update);
 					inany = markType.add(T.inanygroup);
 					markType.add(T.ineachgroup);
 					markType.setSelected(inany);

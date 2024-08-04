@@ -122,7 +122,7 @@ function(i) { return Lanthanides.contains(i) || Actinides.contains(i); }
 
 //=======================================================================
 
-const Lanthanides = GROUPS.add("lanthanides", [
+var Lanthanides = GROUPS.add("lanthanides", [
 0,//H
 0,//He
 0,//Li
@@ -238,7 +238,7 @@ const Lanthanides = GROUPS.add("lanthanides", [
 
 //======================================================================
 
-const Actinides = GROUPS.add("actinides", [
+var Actinides = GROUPS.add("actinides", [
 0,//H
 0,//He
 0,//Li

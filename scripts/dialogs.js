@@ -1,18 +1,21 @@
 "use strict";
 
-loadCss("../styles/dialogs.css");
+//loadCss("../styles/dialogs.css");
 
-const Dialogs = (function(){
-	const dlgs = [];
-	let dragobj = null;
-	let dx;
-	let dy;
+var Dialogs = (function(){
+	var dlgs = [];
+	var dragobj = null;
+	var dx;
+	var dy;
 	
 	function frameMouseDown() {
 		this.style.zIndex = getMaxZindex() + 1;
 	}
 	
 	function headerMouseDown(evt) {
+		if (evt === undefined && 'event' in window)
+			evt = window.event;
+
 		dragobj = this.parentNode; //frame of dialog
 		dragobj.style.cursor = "move";
 		dx = parseInt(dragobj.style.left, 10) - evt.clientX;
@@ -24,6 +27,9 @@ const Dialogs = (function(){
 	
 	function bodyMouseMove(evt) {
 		if (dragobj) {
+			if (evt === undefined && 'event' in window)
+				evt = window.event;
+
 			dragobj.style.left = (evt.clientX + dx) + "px";
 			dragobj.style.top = (evt.clientY + dy) + "px";
 		}
@@ -40,12 +46,12 @@ const Dialogs = (function(){
 	}
 	
 	function Dial(id) {
-		const title = Container().setClass('dialog-title');
-		const icons = Container().setClass("dialog-head-icons");
-		const header = Container([title, icons]).setClass('dialog-header').onMouseDown(headerMouseDown);
-		const content = Container().setClass('dialog-content');
-		const footer = Container().setClass('dialog-footer');
-		const frame = Container(
+		var title = Container().setClass('dialog-title');
+		var icons = Container().setClass("dialog-head-icons");
+		var header = Container([title, icons]).setClass('dialog-header').onMouseDown(headerMouseDown);
+		var content = Container().setClass('dialog-content');
+		var footer = Container().setClass('dialog-footer');
+		var frame = Container(
 				[header, content, footer]).setClass('dialog-frame').onMouseDown(frameMouseDown).setObj(this);
 		document.body.appendChild(frame);
 		
@@ -95,7 +101,7 @@ const Dialogs = (function(){
 	}
 	
 	Dial.prototype.show = function() {
-		const style = this.getFrame().style;
+		var style = this.getFrame().style;
 		
 		if (style.display == "block")
 			return this;
@@ -108,8 +114,8 @@ const Dialogs = (function(){
 	}
 	
 	Dial.prototype.showAt = function(element) {
-		const style = this.getFrame().style;
-		const offset = $(element).offset();
+		var style = this.getFrame().style;
+		var offset = $(element).offset();
 		style.left = offset.left + 'px';
 		style.top = offset.top + 'px';
 		style.display = "block";
@@ -142,7 +148,7 @@ const Dialogs = (function(){
 	}
 	
 	Dial.prototype.move = function(x,y)	{
-		const frame = this.getFrame();
+		var frame = this.getFrame();
 		
 		if (x === undefined) //screen center if unspecified
 		{
@@ -179,8 +185,8 @@ const Dialogs = (function(){
 		},
 		
 		reinit: function(id) {
-			for (let i = 0; i < dlgs.length; i++){
-				const dlg = dlgs[i];
+			for (var i = 0; i < dlgs.length; i++){
+				var dlg = dlgs[i];
 				if (id === undefined || dlg.getId() == id)
 					dlg.reinit();
 			}
@@ -193,11 +199,11 @@ const Dialogs = (function(){
 })();
 
 
-const Element = (function(){
+var Element = (function(){
 	function getDlg(){
-		let node = this;
+		var node = this;
 		while (node && node.getObj) {
-			const obj = node.getObj();
+			var obj = node.getObj();
 			if (Dialogs.isDialog(obj))
 				return obj;
 			node = node.parentNode;
@@ -361,7 +367,7 @@ const Element = (function(){
 	};
 })();
 
-const Container = (function(){
+var Container = (function(){
 	function append(content) {
 		if (!Array.isArray(content))
 			content = [content];
@@ -422,7 +428,7 @@ const Container = (function(){
 })();
 
 
-const Input = (function(){
+var Input = (function(){
 	function onChange(fn) {
 		setEvtHandler(this, "change", fn);
 		return this;
@@ -441,8 +447,8 @@ var Check = function() {
 }
 	
 function LabelCheck(caption) {
-	const cont = Span().setClass("dialog-label-check");
-	const id = uid();
+	var cont = Span().setClass("dialog-label-check");
+	var id = uid();
 	cont.check = Check().setId(id);
 	cont.append( cont.check );
 	cont.append( cont.label = Label(caption).setFor(id) );		
@@ -453,13 +459,13 @@ function Radio() {
 	return Input("radio").setClass("dialog-radio");;
 }
 
-const ListItem = (function(){
+var ListItem = (function(){
 	function isChecked() {
 		return this.getInput().checked;
 	}
 	
 	function getList() {
-		let node = this.parentNode;
+		var node = this.parentNode;
 		while (!node.getItems)
 			node = node.parentNode;
 		return node;
@@ -481,10 +487,10 @@ const ListItem = (function(){
 	}
 	
 	return function(input, caption, obj) {
-		const id = uid();
+		var id = uid();
 		input.setId(id).onClick(inputClick);
-		const label = Label(caption).setFor(id);
-		const listitem = Container([input, label]).setClass("dialog-list-item").setObj(obj);
+		var label = Label(caption).setFor(id);
+		var listitem = Container([input, label]).setClass("dialog-list-item").setObj(obj);
 		listitem.getInput = function(){ return input; };
 		listitem.getLabel = function(){ return label; };
 		listitem.isChecked = isChecked;
@@ -494,14 +500,14 @@ const ListItem = (function(){
 	};
 })();
 
-const CheckItem = (function(){
+var CheckItem = (function(){
 	function setChecked(checked) {
 		this.getInput().checked = (checked === undefined || checked);
 		return this;
 	}
 
 	return function(caption, obj){
-		const listitem = ListItem( Check(), caption, obj );
+		var listitem = ListItem( Check(), caption, obj );
 		listitem.setChecked = setChecked;
 		return listitem;
 	};
@@ -511,9 +517,9 @@ function RadioItem(caption, obj) {
 	return ListItem( Radio(), caption, obj );
 };
 
-const List = (function(){
+var List = (function(){
 	function inputClick(){ //for internal use
-		const list = this.getList();
+		var list = this.getList();
 		if (list.inputClick) //for selection control in radio list
 			list.inputClick(this);
 		if (list.itemClick) //use event
@@ -535,9 +541,9 @@ const List = (function(){
 	}
 	
 	function newregion(caption) {
-		const title = Heading(caption);
+		var title = Heading(caption);
 		this.append(title);
-		const region = Container().setClass("dialog-list-region");
+		var region = Container().setClass("dialog-list-region");
 		this.append(region);
 		this.region = region;
 		title.onclick = function() { $(region).toggle(); };
@@ -545,7 +551,7 @@ const List = (function(){
 	}
 	
 	function getLast() {
-		const items = this.getItems();
+		var items = this.getItems();
 		if (items.length)
 			return items[items.length - 1];
 		else
@@ -553,13 +559,13 @@ const List = (function(){
 	}
 
 	return function(border) {
-		const list = Container();
+		var list = Container();
 		if (border)
 			list.setClass("dialog-list-border");
 		else
 			list.setClass("dialog-list");
 		
-		const items = [];
+		var items = [];
 		list.getItems = function(){ return items; };
 		list.addItem = addItem;
 		list.region = list;
@@ -570,27 +576,27 @@ const List = (function(){
 	};
 })();
 
-const CheckList = (function(){
+var CheckList = (function(){
 	function add(caption, obj) {
 		return this.addItem( CheckItem(caption, obj) );
 	}
 	
 	function clearSelection() {
-		const items = this.getItems();
+		var items = this.getItems();
 		for (var i = 0; i < items.length; i++)
 			items[i].setChecked(false);
 		return this;
 	}
 	
 	return function(border) {
-		const list = List(border);
+		var list = List(border);
 		list.add = add;
 		list.clearSelection = clearSelection;
 		return list;
 	};
 })();					 
 
-const RadioList = (function(){
+var RadioList = (function(){
 	function add(caption, obj) {
 		return this.addItem( RadioItem(caption, obj) );
 	}
@@ -607,8 +613,8 @@ const RadioList = (function(){
 	}
 	
 	function setSelectedObj(obj) {
-		const items = this.getItems();
-		for (let i = 0; i < items.length; i++)
+		var items = this.getItems();
+		for (var i = 0; i < items.length; i++)
 			if (items[i].getObj() === obj){
 				this.setSelected(items[i]);
 				break;
@@ -622,8 +628,8 @@ const RadioList = (function(){
 	}
 	
 	return function(border) {
-		let selitem = null;
-		const list = List(border);
+		var selitem = null;
+		var list = List(border);
 		list.add = add;
 		list.inputClick = inputClick;
 		list.onSelChange = onSelChange;
@@ -651,9 +657,9 @@ const RadioList = (function(){
 	};
 })();
 
-const Combo = (function() {
+var Combo = (function() {
 	function addItem(caption, obj) {
-		const option = Element("option").setObj(obj);
+		var option = Element("option").setObj(obj);
 		option.text = caption;
 		this.add(option);
 		return option;
@@ -668,7 +674,7 @@ const Combo = (function() {
 	}
 	
 	return function(size) {
-		const combo = Element("select").setClass("dialog-select");
+		var combo = Element("select").setClass("dialog-select");
 		if (size != undefined)
 			combo.setAttribute("size", size);
 		combo.addItem = addItem;
@@ -679,7 +685,7 @@ const Combo = (function() {
 })();
 
 function Button(caption, onclick) {
-	const button = Input("button").setClass("dialog-button").onClick(onclick);
+	var button = Input("button").setClass("dialog-button").onClick(onclick);
 	button.value = caption;
 	return button;
 }
@@ -697,21 +703,21 @@ function ModalBtn(caption, result) {
 }
 
 function BitBtn(src, caption, onclick, accel) {
-	const button = Container("button").set("type", "button").setClass("dialog-bitbtn").onClick(onclick).html('<img src="icons/' + src + '.png"><br><strong>' + caption + '</strong>');
+	var button = Container("button").set("type", "button").setClass("dialog-bitbtn").onClick(onclick).html('<img src="icons/' + src + '.png"><br><strong>' + caption + '</strong>');
 	if (accel)
 		$(document).hotKey(accel, function() { button.click(); return false; });
 	return button;
 }
 
 function Edit(text) {
-	const edit = Input("edit").setClass("dialog-edit");
+	var edit = Input("edit").setClass("dialog-edit");
 	if (text)
 		edit.value = text;
 	return edit;
 }
 
 function Textarea(text, rows) {
-	const edit = Element("textarea").setClass("dialog-textarea");
+	var edit = Element("textarea").setClass("dialog-textarea");
 	if (text)
 		edit.value = text;
 	if (rows)
@@ -719,49 +725,49 @@ function Textarea(text, rows) {
 	return edit;
 }
 
-const Picture = function(src) {
+var Picture = function(src) {
 	return Element("img").set("src", src);
 };
 
-const Icon = function(src){
+var Icon = function(src){
 	return Picture(src).setClass("dialog-icon");
 }
 
-const CloseIcon = function(){
+var CloseIcon = function(){
 	return Icon("icons/close.png").onClick("this.getDlg().remove()").setHint(T.close);
 };
 	
-const HideIcon = function(){
+var HideIcon = function(){
 	//show tooltip "Close", even if just hiding the dialog
 	return Icon("icons/close.png").onClick("this.getDlg().hide()").setHint(T.close);
 };
 
-const InfoIcon = function(onclick){
+var InfoIcon = function(onclick){
 	return Icon("icons/info-small.png").setHint(T.info).onClick(onclick);
 };
 
-const Label = (function(){
+var Label = (function(){
 	function setFor(id) {
 		return this.set("htmlFor", id).set("for", id);
 	}
 
 	return function(caption) {
-		const label = Element("label").setClass("dialog-label");
+		var label = Element("label").setClass("dialog-label");
 		label.setFor = setFor;
 		label.appendChild(document.createTextNode(caption));
 		return label;
 	};
 })();
 
-const Para = function(content) {
-	const para = Container("p");
+var Para = function(content) {
+	var para = Container("p");
 	if (content)
 		para.innerHTML = content;
 	return para;
 };
 
-const Heading = function(level, content) {
-	let heading;
+var Heading = function(level, content) {
+	var heading;
 	if (level === undefined)
 		heading = Container("h1");
 	else if (String.isString(level)) {
@@ -775,14 +781,14 @@ const Heading = function(level, content) {
 	return heading;
 };
 
-const Span = function(content) {
-	const span = Container("span");
+var Span = function(content) {
+	var span = Container("span");
 	if (content)
 		span.innerHTML = content;
 	return span;
 };
 
-const Grid = (function() {
+var Grid = (function() {
 	function addCell(header) {
 		if (this.cindex == 1)
 			this.row = this.insertRow(-1);
@@ -802,14 +808,14 @@ const Grid = (function() {
 	}
 	
 	function addInput(input) {
-		const cell = this.addCell(false).setClass('dialog-input');
+		var cell = this.addCell(false).setClass('dialog-input');
 		if (input)
 			cell.append(input.hFill());
 		return cell;
 	}
 	
 	function add(array) {
-		for (let i = 0; i < array.length; i++)
+		for (var i = 0; i < array.length; i++)
 			if (String.isString(array[i]))
 				this.addLabel(array[i]);
 			else if (Object.isDOM(array[i]))
@@ -825,7 +831,7 @@ const Grid = (function() {
 	}
 	
 	return function(cols) {
-		const grid = Element("table").setClass('dialog-grid');
+		var grid = Element("table").setClass('dialog-grid');
 		grid.cols = cols || 2;
 		grid.cindex = 1;
 		grid.addCell = addCell;
@@ -838,20 +844,20 @@ const Grid = (function() {
 	};
 })();
 
-const Separator = function() {
-	const hr = document.createElement("hr");
+var Separator = function() {
+	var hr = document.createElement("hr");
 	hr.className = "dialog-rule";
 	return hr;
 };
 
-const Newline = function() {
+var Newline = function() {
 	return document.createElement("br");
 };
 
 
-const Tooltip = (function() {
-	let tooltip = null;
-	let timeout = null;
+var Tooltip = (function() {
+	var tooltip = null;
+	var timeout = null;
 	
 	function reachTimeout() {
 		tooltip.hide();
@@ -893,7 +899,7 @@ const Tooltip = (function() {
 })();
 
 function Message(msgkey, titlekey) { //translatable message box
-	const dlg = Dialogs.create();
+	var dlg = Dialogs.create();
 	dlg.getFrame().setWidth("30em");
 	dlg.setInit( function() {
 		if (titlekey)
@@ -908,9 +914,9 @@ function Message(msgkey, titlekey) { //translatable message box
 }
 
 function Prompt(msgkey, titlekey, text) {
-	const dlg = Dialogs.create();
+	var dlg = Dialogs.create();
 	dlg.getFrame().setWidth("20em");
-	const edit = Textarea(text, 2).hFill();
+	var edit = Textarea(text, 2).hFill();
 	dlg.showFocus = edit;
 	dlg.getValue = function() { return edit.value; };
 	dlg.setInit( function() {
@@ -931,7 +937,7 @@ function tmsg(contentkey, titlekey) { //translatable message box
 }
 
 function timg(titlekey, src) { //image with translatable title
-	const dlg = Dialogs.create();
+	var dlg = Dialogs.create();
 	
 	function pictureLoad() {
 		if (dlg.visible())
