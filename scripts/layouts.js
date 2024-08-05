@@ -47,7 +47,7 @@ var Layouts = (function() {
 		
 		getDialog: function() {
 			if (dlg === null) {
-				dlg = Dialogs.create();
+				dlg = DIALOGS.create();
 				dlg.setWidth("19em");
 				dlg.setInit( function() {
 					this.setTitle(T.layout).addFoot( HideBtn(T.close) ).addIcon( HideIcon() );

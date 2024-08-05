@@ -108,7 +108,7 @@ var GROUPS = (function() {
 		
 		getDlg: function() {
 			if (dlg === null){
-				dlg = Dialogs.create();
+				dlg = DIALOGS.create();
 				dlg.setWidth("25em");
 				dlg.setInit(function() {
 					this.setTitle(T.groups).addFoot( [Button(T.clear, clearClick), HideBtn()] ).addIcon( HideIcon() );

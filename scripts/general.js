@@ -299,18 +299,6 @@ function getUrlParamValue( name ) {
 	return (results === null) ? null : results[1];
 }
 
-function getMaxZindex(id) {
-	var parent = id ? document.getElementById(id) : document;
-	var elements = parent.getElementsByTagName("*");
-	var z = 0;
-
-	for (var i = 0; i < elements.length; i++)
-		if (elements[i].style.zIndex != "")
-			z = Math.max( z, parseInt(elements[i].style.zIndex) );
-		
-	return z;
-}
-
 function TLink(text, title, url) {
 	if (url)
 		return '<A HREF="' + url + '" TITLE="' + title + '" TARGET="_blank">' + text + '</A>';
@@ -340,7 +328,20 @@ function RGB2HTML(red, green, blue)
  	return "#" + rgb.toString(16).lpad("0", 6);
 }
 
-/*function getAbsLeft( obj ) {
+/*
+function getMaxZindex(id) {
+	var parent = id ? document.getElementById(id) : document;
+	var elements = parent.getElementsByTagName("*");
+	var z = 0;
+
+	for (var i = 0; i < elements.length; i++)
+		if (elements[i].style.zIndex != "")
+			z = Math.max( z, parseInt(elements[i].style.zIndex) );
+		
+	return z;
+}
+
+function getAbsLeft( obj ) {
 	var x = 0;
     while( obj && !isNaN( obj.offsetLeft ) ) {
         x += obj.offsetLeft;
@@ -433,7 +434,7 @@ var disableSelect = function(disable) {
 	disableSelect(disable);
 }
 
-function altRows(table) {
+/*function altRows(table) {
 	if (String.isString(table))
 		table = document.getElementById(table);
 
@@ -445,4 +446,4 @@ function altRows(table) {
 function clearChildNodes(parent) {
     while (parent.firstChild)
 		parent.removeChild(parent.lastChild);
-}
+}*/

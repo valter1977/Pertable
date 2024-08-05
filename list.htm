@@ -3,28 +3,26 @@
 <head>
 <link href="styles/common.css" rel="stylesheet" type="text/css">
 <link href="styles/table.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="scripts/jquery.js"></script>
 <script type="text/javascript" src="scripts/general.js"></script>
 <script type="text/javascript">
 function init() {
 	var props = opener.getListDlg().getSelected();
-	var table = document.getElementById("listing");
-	var row;
-	var cell;
+	var table = $('#listing');
 	
-	row = table.insertRow(-1);
-	for (var k = 0; k < props.length; k++) {
-		cell = document.createElement("th");
-		cell.innerHTML = props[k].getName(true, true);
-		row.appendChild(cell);
-	}
-	
+	var row = $('<tr>');
+	for (var k = 0; k < props.length; k++)
+		row.append($('<th>').html(props[k].getName(true, true)));
+	table.append(row)
+
 	for (var i = 0; i < opener.SYMBOLS.length; i++) {
-	 	row = table.insertRow(-1);
+		row = $('<tr>');
 		for (k = 0; k < props.length; k++)
-			row.insertCell(-1).innerHTML = props[k].format(i);
+			row.append($('<td>').html(props[k].format(i)));
+		table.append(row)
 	}
 	
-	altRows(table);
+	table.children('tr:even').addClass('even').end().children('tr:odd').addClass('odd');
 }
 </script>
 <title>Tabulated data for element</title>

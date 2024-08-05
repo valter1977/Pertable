@@ -248,7 +248,7 @@ var SCALE = LINEAR_SCALE;
 
 var PropInfoIcon = (function(){
 	function iconClick() {
-		var dlg = Dialogs.create();
+		var dlg = DIALOGS.create();
 		var prop = this.getObj();
 		dlg.setWidth("35em");
 		dlg.setInit( function() {
@@ -298,7 +298,7 @@ var getDataDlg = (function() {
 	
 	return function() {
 		if (dlg === null) {
-			dlg = Dialogs.create();
+			dlg = DIALOGS.create();
 			dlg.setWidth("20em");
 			dlg.setInit(function() {
 				this.setTitle(T.data);
@@ -348,7 +348,7 @@ var getColorDlg = (function() {
 	
 	return function() {
 		if (dlg === null) {
-			dlg = Dialogs.create();
+			dlg = DIALOGS.create();
 			dlg.setWidth("11em");
 			dlg.setInit(function() {
 				this.setTitle(T.colormap).addFoot( HideBtn() ).addIcon( HideIcon() );
@@ -401,7 +401,7 @@ var getPlotDlg = (function() {
 	
 	return function(){
 		if (dlg === null) {
-			dlg = Dialogs.create();
+			dlg = DIALOGS.create();
 			dlg.setWidth("22em");
 			dlg.setInit(function() {
 				this.setTitle(T.plot).addIcon( HideIcon() );
@@ -454,7 +454,7 @@ var getListDlg = (function() {
 	
 	return function(){
 		if (dlg === null) {
-			dlg = Dialogs.create();
+			dlg = DIALOGS.create();
 			dlg.setWidth("24em");
 			combo = new Array(count);
 			for (var i = 0; i < count; i++)
@@ -546,7 +546,7 @@ var getHistDlg = (function() {
 	
 	return function(){
 		if (dlg === null) {
-			dlg = Dialogs.create();
+			dlg = DIALOGS.create();
 			dlg.setWidth("20em");
 			editStart = Edit();
 			editStop = Edit();

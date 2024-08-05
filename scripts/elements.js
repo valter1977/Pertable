@@ -58,7 +58,7 @@ var PERTAB = (function() {
 	function clickSymbol() {
 		if (!APP.isLoaded()) return;
 		
-		var dlg = Dialogs.create("elem");
+		var dlg = DIALOGS.create("elem");
 		dlg.index = this.atomNumber - 1;
 		dlg.setWidth("40em").setScroll("20em");
 		dlg.setInit( function() {
@@ -256,7 +256,7 @@ var PERTAB = (function() {
 		
 		getSearchDlg: function() {
 			if (searchDlg === null) {
-				searchDlg = Dialogs.create();
+				searchDlg = DIALOGS.create();
 				searchDlg.setWidth("15em");
 				editName = Edit().onChange(findByName);
 				editSymbol = Edit().onChange(findBySymbol);

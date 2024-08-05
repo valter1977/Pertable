@@ -40,7 +40,7 @@ var APP = (function() {
 			PROPERTIES.sort();
 			PERTAB.displayProperty();
 			PERTAB.setHints();
-			Dialogs.reinit(); //rebuilds the content of all dialogs
+			DIALOGS.reinit(); //rebuilds the content of all dialogs
 		}
 	}
 	
@@ -81,19 +81,17 @@ var APP = (function() {
 	function btnExitClick() { window.open("","_self").close(); };
 
 	function transMainUI() {
-		var container = document.getElementById("toolbar");
-		clearChildNodes(container)
-		
-		container.appendChild( BitBtn("groups", T.groups, btnGroupsClick).setHint(T.grouphint) );
-		container.appendChild( BitBtn("data", T.data, btnDataClick).setHint(T.datahint) );
-		container.appendChild( BitBtn("colormap", T.colormap, btnColorClick).setHint(T.colormaphint) );
-		container.appendChild( BitBtn("plot", T.plot, btnPlotClick).setHint(T.plothint) );
-		container.appendChild( BitBtn("histogram", T.histogram, btnHistClick).setHint(T.histogramhint) );
-		container.appendChild( BitBtn("table", T.table, btnListClick).setHint(T.tablehint) );
-		container.appendChild( BitBtn("layout", T.layout, btnLayoutClick).setHint(T.layouthint) );
-		container.appendChild( BitBtn("search", T.search, btnSearchClick, {key: 'f', modifier: 'ctrl'}).setHint(T.searchhint) );
-		container.appendChild( BitBtn("settings", T.settings, btnSettingsClick).setHint(T.settingshint) );
-		container.appendChild( BitBtn("exit", T.exit, btnExitClick));
+		$("#toolbar").empty()
+		.append( BitBtn("groups", T.groups, btnGroupsClick).setHint(T.grouphint) )
+		.append( BitBtn("data", T.data, btnDataClick).setHint(T.datahint) )
+		.append( BitBtn("colormap", T.colormap, btnColorClick).setHint(T.colormaphint) )
+		.append( BitBtn("plot", T.plot, btnPlotClick).setHint(T.plothint) )
+		.append( BitBtn("histogram", T.histogram, btnHistClick).setHint(T.histogramhint) )
+		.append( BitBtn("table", T.table, btnListClick).setHint(T.tablehint) )
+		.append( BitBtn("layout", T.layout, btnLayoutClick).setHint(T.layouthint) )
+		.append( BitBtn("search", T.search, btnSearchClick, {key: 'f', modifier: 'ctrl'}).setHint(T.searchhint) )
+		.append( BitBtn("settings", T.settings, btnSettingsClick).setHint(T.settingshint) )
+		.append( BitBtn("exit", T.exit, btnExitClick));
 		
 		document.title = T.maintitle;
 		$('#apptitle').text( T.maintitle );
@@ -104,7 +102,7 @@ var APP = (function() {
 
 	function getSettingsDlg(){
 		if (dlg === null) {
-			dlg = Dialogs.create();
+			dlg = DIALOGS.create();
 			dlg.setWidth("12em");
 			dlg.setInit(function() {
 				this.setTitle(T.settings).addFoot( HideBtn() ).addIcon( HideIcon() );
@@ -127,7 +125,7 @@ var APP = (function() {
 			if (COLORMAP && !GROUPS.isSelected())
 				PROPERTIES.showRange();
 		}
-		Dialogs.reinit("elem");
+		DIALOGS.reinit("elem");
 	}
 	
 	function fullPrecisionClick() {

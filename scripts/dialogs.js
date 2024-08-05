@@ -1,15 +1,15 @@
 "use strict";
 
-//loadCss("../styles/dialogs.css");
+loadCss("styles/dialogs.css");
 
-var Dialogs = (function(){
+var DIALOGS = (function(){
 	var dlgs = [];
 	var dragobj = null;
 	var dx;
 	var dy;
 	
 	function frameMouseDown() {
-		this.style.zIndex = getMaxZindex() + 1;
+		this.front();
 	}
 	
 	function headerMouseDown(evt) {
@@ -101,34 +101,36 @@ var Dialogs = (function(){
 	}
 	
 	Dial.prototype.show = function() {
-		var style = this.getFrame().style;
+		var frame = this.getFrame();
+		var style = frame.style;
 		
 		if (style.display == "block")
 			return this;
 
 		style.display = "block";
-		style.zIndex = getMaxZindex() + 1;
+		frame.front();
+		
 		if (this.showFocus)
 			this.showFocus.focus();
 		return this;
 	}
 	
 	Dial.prototype.showAt = function(element) {
-		var style = this.getFrame().style;
+		var frame = this.getFrame();
+		var style = frame.style;
 		var offset = $(element).offset();
 		style.left = offset.left + 'px';
 		style.top = offset.top + 'px';
 		style.display = "block";
-		style.zIndex = getMaxZindex() + 1;
+		frame.front();
+
 		if (this.showFocus)
 			this.showFocus.focus();
 		return this;
 	}
 	
 	Dial.prototype.showModalAt = function(element, onresult) {
-		this.hider = document.createElement("div");
-		this.hider.className = "dialog-hider";
-		this.hider.style.zIndex = getMaxZindex() + 1;
+		this.hider = Element("div").setClass("dialog-hider").front();
 		document.body.appendChild(this.hider);
 		this.setModalResult = function(type) {
 			if (onresult)
@@ -200,18 +202,18 @@ var Dialogs = (function(){
 
 
 var Element = (function(){
-	function getDlg(){
+	function dialog() {
 		var node = this;
 		while (node && node.getObj) {
 			var obj = node.getObj();
-			if (Dialogs.isDialog(obj))
+			if (DIALOGS.isDialog(obj))
 				return obj;
 			node = node.parentNode;
 		}
 		return null;
 	}
 	
-	function setCursor(value) {
+	function cursor(value) {
 		this.style.cursor = value;
 		return this;
 	}
@@ -256,7 +258,7 @@ var Element = (function(){
 
 	function onClick(fn) {
 		setEvtHandler(this, "click", fn);
-		this.setCursor("pointer");
+		this.cursor("pointer");
 		return this;
 	}
 
@@ -330,10 +332,22 @@ var Element = (function(){
 		return this;
 	}
 
+	function front() {
+		var elements = this.parentNode.getElementsByTagName("*");
+		var z = 0;
+
+		for (var i = 0; i < elements.length; i++)
+			if (elements[i].style.zIndex != "")
+				z = Math.max( z, parseInt(elements[i].style.zIndex) );
+
+		this.style.zIndex = z + 1;
+		return this;
+	};
+
 	return function(tag) {
 		var object;
 		var element = document.createElement(tag);
-		element.getDlg = getDlg;
+		element.dialog = dialog;
 		element.hFill = hFill;
 		element.margBottom = margBottom;
 		element.margLeft = margLeft;
@@ -346,7 +360,7 @@ var Element = (function(){
 		element.set = set;
 		element.setBottom = setBottom;
 		element.setClass = setClass;
-		element.setCursor = setCursor;
+		element.cursor = cursor;
 		element.setHeight = setHeight;
 		element.setHint = setHint;
 		element.setId = setId;
@@ -363,6 +377,7 @@ var Element = (function(){
 		element.setTop = setTop;
 		element.setWidth = setWidth;
 		element.verAlign = verAlign;
+		element.front = front;
 		return element;
 	};
 })();
@@ -407,7 +422,7 @@ var Container = (function(){
 		this.style.whiteSpace = value;
 		return this;
 	}
-	
+
 	return function(tag) {
 		var cont;
 		if (String.isString(tag))
@@ -691,15 +706,15 @@ function Button(caption, onclick) {
 }
 
 function CloseBtn(caption){
-	return Button(caption || T.close.capitalize(), "this.getDlg().remove()");
+	return Button(caption || T.close.capitalize(), "this.dialog().remove()");
 }
 
 function HideBtn(caption) {
-	return Button(caption || T.close.capitalize(), "this.getDlg().hide()");
+	return Button(caption || T.close.capitalize(), "this.dialog().hide()");
 }
 
 function ModalBtn(caption, result) {
-	return Button(caption, function() { this.getDlg().setModalResult(result); });
+	return Button(caption, function() { this.dialog().setModalResult(result); });
 }
 
 function BitBtn(src, caption, onclick, accel) {
@@ -734,12 +749,12 @@ var Icon = function(src){
 }
 
 var CloseIcon = function(){
-	return Icon("icons/close.png").onClick("this.getDlg().remove()").setHint(T.close);
+	return Icon("icons/close.png").onClick("this.dialog().remove()").setHint(T.close);
 };
 	
 var HideIcon = function(){
 	//show tooltip "Close", even if just hiding the dialog
-	return Icon("icons/close.png").onClick("this.getDlg().hide()").setHint(T.close);
+	return Icon("icons/close.png").onClick("this.dialog().hide()").setHint(T.close);
 };
 
 var InfoIcon = function(onclick){
@@ -878,7 +893,7 @@ var Tooltip = (function() {
 				var offset = $(element).offset();
 				this.style.left = offset.left + 'px';
 				this.style.top = (offset.top - tooltip.offsetHeight) + 'px';
-				this.style.zIndex = getMaxZindex() + 1;
+				tooltip.front();
 				timeout = setTimeout(reachTimeout, time || 5000);
 				return this;
 			}
@@ -899,7 +914,7 @@ var Tooltip = (function() {
 })();
 
 function Message(msgkey, titlekey) { //translatable message box
-	var dlg = Dialogs.create();
+	var dlg = DIALOGS.create();
 	dlg.getFrame().setWidth("30em");
 	dlg.setInit( function() {
 		if (titlekey)
@@ -914,7 +929,7 @@ function Message(msgkey, titlekey) { //translatable message box
 }
 
 function Prompt(msgkey, titlekey, text) {
-	var dlg = Dialogs.create();
+	var dlg = DIALOGS.create();
 	dlg.getFrame().setWidth("20em");
 	var edit = Textarea(text, 2).hFill();
 	dlg.showFocus = edit;
@@ -937,7 +952,7 @@ function tmsg(contentkey, titlekey) { //translatable message box
 }
 
 function timg(titlekey, src) { //image with translatable title
-	var dlg = Dialogs.create();
+	var dlg = DIALOGS.create();
 	
 	function pictureLoad() {
 		if (dlg.visible())
