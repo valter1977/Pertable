@@ -7,11 +7,11 @@ var Layouts = (function() {
 	
 	function iconClick() {
 		dlg.hide();
-		switchTo(names[this.getObj()]);
+		switchTo(names[this.obj()]);
 	}
 	
 	function infoClick() {
-		var name = names[this.getObj()];
+		var name = names[this.obj()];
 		Message(name + "info", name).showAt(this.parentNode);
 	}
 	
@@ -48,16 +48,16 @@ var Layouts = (function() {
 		getDialog: function() {
 			if (dlg === null) {
 				dlg = DIALOGS.create();
-				dlg.setWidth("19em");
+				dlg.width("19em");
 				dlg.setInit( function() {
 					this.setTitle(T.layout).addFoot( HideBtn(T.close) ).addIcon( HideIcon() );
 				
 					for (var i = 0; i < names.length; i++) {
 						var info = names[i] + "info";
-						var cont = Container().setClass("layout-select").setHint(T[names[i]]);
-						cont.append(Picture('layouts/' + names[i] + '.png').setObj(i).onClick(iconClick));
+						var cont = Container().cls("layout-select").hint(T[names[i]]);
+						cont.append(Picture('layouts/' + names[i] + '.png').obj(i).on('click', iconClick));
 						if (APP.hasContent(info))
-							cont.append(InfoIcon().margLeft("1em").onClick(infoClick).setObj(i));
+							cont.append(InfoIcon().margLeft("1em").on('click', infoClick).obj(i));
 						this.addContent(cont);
 					}
 				});

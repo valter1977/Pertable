@@ -60,18 +60,18 @@ var PERTAB = (function() {
 		
 		var dlg = DIALOGS.create("elem");
 		dlg.index = this.atomNumber - 1;
-		dlg.setWidth("40em").setScroll("20em");
+		dlg.width("40em").scroll("20em");
 		dlg.setInit( function() {
 			var k = this.index;
 			this.setTitle(T[SYMBOLS[k]].capitalize() + " (" + SYMBOLS[k] + ")");
 			this.addFoot( CloseBtn(T.close) ).addIcon( CloseIcon() );
-			var grid = Grid(3).hFill().cellSpace(1).cellPad(3);
+			var grid = Grid(3).hfill().attr("cellspacing", 1).attr("cellpadding", 3);
 			this.addContent(grid);
 			PROPERTIES.restart();
 			while (PROPERTIES.next()) {
 				var prop = PROPERTIES.get();
 				grid.addCell(true).horAlign("right").setWrap(false).html( prop.getName() + ":" );
-				grid.addCell(false).horAlign("left").hFill().setWrap(false).html( prop.formatWithUnit(k) );
+				grid.addCell(false).horAlign("left").hfill().setWrap(false).html( prop.formatWithUnit(k) );
 				var cell = grid.addCell();
 				if ( prop.info || prop.source )
 					cell.append( PropInfoIcon(prop) );
@@ -257,10 +257,10 @@ var PERTAB = (function() {
 		getSearchDlg: function() {
 			if (searchDlg === null) {
 				searchDlg = DIALOGS.create();
-				searchDlg.setWidth("15em");
-				editName = Edit().onChange(findByName);
-				editSymbol = Edit().onChange(findBySymbol);
-				editNumber = Edit().onChange(findByNumber);
+				searchDlg.width("15em");
+				editName = Edit().on('change', findByName);
+				editSymbol = Edit().on('change', findBySymbol);
+				editNumber = Edit().on('change', findByNumber);
 				searchDlg.showFocus = editName;
 				
 				searchDlg.setInit( function() {

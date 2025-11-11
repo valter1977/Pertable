@@ -54,11 +54,13 @@ button.dialog-bitbtn {
 	border-radius: 5px;
 	padding: 5px;
 	margin: 2px;
+	cursor: pointer;
 }
 
 input.dialog-button {
 	margin: 3px;
 	font-size: 100%;
+	cursor: pointer;
 }
 
 select.dialog-select {

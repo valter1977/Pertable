@@ -8,12 +8,8 @@ var DIALOGS = (function(){
 	var dx;
 	var dy;
 	
-	function frameMouseDown() {
-		this.front();
-	}
-	
 	function headerMouseDown(evt) {
-		if (evt === undefined && 'event' in window)
+		if (evt === undefined)
 			evt = window.event;
 
 		dragobj = this.parentNode; //frame of dialog
@@ -27,7 +23,7 @@ var DIALOGS = (function(){
 	
 	function bodyMouseMove(evt) {
 		if (dragobj) {
-			if (evt === undefined && 'event' in window)
+			if (evt === undefined)
 				evt = window.event;
 
 			dragobj.style.left = (evt.clientX + dx) + "px";
@@ -46,13 +42,13 @@ var DIALOGS = (function(){
 	}
 	
 	function Dial(id) {
-		var title = Container().setClass('dialog-title');
-		var icons = Container().setClass("dialog-head-icons");
-		var header = Container([title, icons]).setClass('dialog-header').onMouseDown(headerMouseDown);
-		var content = Container().setClass('dialog-content');
-		var footer = Container().setClass('dialog-footer');
-		var frame = Container(
-				[header, content, footer]).setClass('dialog-frame').onMouseDown(frameMouseDown).setObj(this);
+		var title = Container().cls('dialog-title');
+		var icons = Container().cls("dialog-head-icons");
+		var header = Container([title, icons]).cls('dialog-header').on('mousedown', headerMouseDown);
+		var content = Container().cls('dialog-content');
+		var footer = Container().cls('dialog-footer');
+		var frame = Container([header, content, footer]).cls('dialog-frame').obj(this);
+		frame.on('mousedown', frame.front);
 		document.body.appendChild(frame);
 		
 		this.clear = function() {
@@ -61,12 +57,12 @@ var DIALOGS = (function(){
 			footer.innerHTML = "";
 		};
 		
-		this.setScroll = function(height) {
+		this.scroll = function(height) {
 			content.style.height = height;
 			content.style.overflow = "auto";
 		};
 		
-		this.getId = function() {
+		this.id = function() {
 			return id;
 		};
 		
@@ -74,7 +70,7 @@ var DIALOGS = (function(){
 		this.addIcon = function(array){ icons.append(array); return this; };
 		this.addContent = function(array){ content.append(array); return this; };
 		this.addFoot = function(array){ footer.append(array); return this; };
-		this.getFrame = function(){ return frame; };
+		this.frame = function(){ return frame; };
 		
 		dlgs.push(this);
 	};
@@ -93,7 +89,7 @@ var DIALOGS = (function(){
 
 	Dial.prototype.remove = function() {
 		dlgs.remove(this); 
-		document.body.removeChild(this.getFrame());
+		document.body.removeChild(this.frame());
 		if (this.hider) {
 			document.body.removeChild(this.hider);
 			this.hider = null;
@@ -101,7 +97,7 @@ var DIALOGS = (function(){
 	}
 	
 	Dial.prototype.show = function() {
-		var frame = this.getFrame();
+		var frame = this.frame();
 		var style = frame.style;
 		
 		if (style.display == "block")
@@ -116,7 +112,7 @@ var DIALOGS = (function(){
 	}
 	
 	Dial.prototype.showAt = function(element) {
-		var frame = this.getFrame();
+		var frame = this.frame();
 		var style = frame.style;
 		var offset = $(element).offset();
 		style.left = offset.left + 'px';
@@ -130,7 +126,7 @@ var DIALOGS = (function(){
 	}
 	
 	Dial.prototype.showModalAt = function(element, onresult) {
-		this.hider = Element("div").setClass("dialog-hider").front();
+		this.hider = Element("div").cls("dialog-hider").front();
 		document.body.appendChild(this.hider);
 		this.setModalResult = function(type) {
 			if (onresult)
@@ -141,16 +137,16 @@ var DIALOGS = (function(){
 	}
 	
 	Dial.prototype.hide = function() {
-		this.getFrame().style.display = "none";
+		this.frame().style.display = "none";
 		return this;
 	}
 	
 	Dial.prototype.visible = function() {
-		return this.getFrame().style.display != "none";
+		return this.frame().style.display != "none";
 	}
 	
 	Dial.prototype.move = function(x,y)	{
-		var frame = this.getFrame();
+		var frame = this.frame();
 		
 		if (x === undefined) //screen center if unspecified
 		{
@@ -171,16 +167,16 @@ var DIALOGS = (function(){
 		return this;
 	}
 	
-	Dial.prototype.setWidth = function(value) {
-		this.getFrame().setWidth(value);
+	Dial.prototype.width = function(value) {
+		this.frame().setWidth(value);
 		return this;
 	}
 	
 	Dial.prototype.setHeight = function(value) {
-		this.getFrame().setHeight(value);
+		this.frame().setHeight(value);
 		return this;
 	}
-	
+
 	return {
 		create: function(tag) {
 			return new Dial(tag);
@@ -189,7 +185,7 @@ var DIALOGS = (function(){
 		reinit: function(id) {
 			for (var i = 0; i < dlgs.length; i++){
 				var dlg = dlgs[i];
-				if (id === undefined || dlg.getId() == id)
+				if (id === undefined || dlg.id() == id)
 					dlg.reinit();
 			}
 		},
@@ -204,8 +200,8 @@ var DIALOGS = (function(){
 var Element = (function(){
 	function dialog() {
 		var node = this;
-		while (node && node.getObj) {
-			var obj = node.getObj();
+		while (node && node.obj) {
+			var obj = node.obj();
 			if (DIALOGS.isDialog(obj))
 				return obj;
 			node = node.parentNode;
@@ -223,8 +219,8 @@ var Element = (function(){
 		return this;
 	}
 		
-	function set(attr, value) {
-		this.setAttribute(attr, value);
+	function attr(name, value) {
+		this.setAttribute(name, value);
 		return this;
 	}
 
@@ -233,62 +229,31 @@ var Element = (function(){
 		return this;
 	}
 	
-	function setId(id) {
-		return this.set('id', id);
-	}
-	
-	function setClass(name) {
+	function cls(name) {
 		this.className = name;
 		return this;
 	}
 
-	function setHint(hint) {
+	function hfill() {
+		this.style.width = "100%";
+		return this;
+	}
+
+	function hint(content) {
 		this.onmouseover = function() {
-			Tooltip(hint).showAt(this);
+			Tooltip(content).showAt(this);
 		}
 		
 		return this;
-		//return this.set("title", hint);
 	}
 
-	function onLoad(fn) {
-		setEvtHandler(this, "load", fn);
-		return this;
-	}
-
-	function onClick(fn) {
-		setEvtHandler(this, "click", fn);
-		this.cursor("pointer");
-		return this;
-	}
-
-	function onMouseDown(fn) {
-		setEvtHandler(this, "mousedown", fn);
-		return this;
-	}
-	
-	function onMouseUp(fn) {
-		setEvtHandler(this, "mouseup", fn);
+	function on(type, handler) {
+		setEvtHandler(this, type, handler);
 		return this;
 	}
 
 	function setLeft(left) {
 		this.style.left = left;
-		return this;
-	}
-
-	function setRight(right) {
-		this.style.right = right;
-		return this;
-	}
-
-	function setTop(top) {
-		this.style.top = top;
-		return this;
-	}
-	
-	function setBottom(bottom) {
-		this.style.bottom = bottom;
 		return this;
 	}
 
@@ -312,18 +277,13 @@ var Element = (function(){
 		return this;
 	}
 
-	function setWidth(value) {
-		this.style.width = value;
-		return this;
-	}
-
 	function setHeight(value) {
 		this.style.height = value;
 		return this;
 	}
 	
-	function hFill() {
-		this.style.width = "100%";
+	function setWidth(value) {
+		this.style.width = value;
 		return this;
 	}
 
@@ -333,7 +293,7 @@ var Element = (function(){
 	}
 
 	function front() {
-		var elements = this.parentNode.getElementsByTagName("*");
+		var elements = (this.parentNode || document).getElementsByTagName("*");
 		var z = 0;
 
 		for (var i = 0; i < elements.length; i++)
@@ -345,39 +305,35 @@ var Element = (function(){
 	};
 
 	return function(tag) {
-		var object;
+		var object = null;
 		var element = document.createElement(tag);
+		element.attr = attr;
+		element.cls = cls;
+		element.cursor = cursor;
 		element.dialog = dialog;
-		element.hFill = hFill;
+		element.front = front;
+		element.hfill = hfill;
 		element.margBottom = margBottom;
 		element.margLeft = margLeft;
 		element.margRight = margRight;
 		element.margTop = margTop;
 		element.newline = newline;
-		element.onClick = onClick;
-		element.onLoad = onLoad;
-		element.onMouseDown = onMouseDown;
-		element.set = set;
-		element.setBottom = setBottom;
-		element.setClass = setClass;
-		element.cursor = cursor;
+		element.on = on;
 		element.setHeight = setHeight;
-		element.setHint = setHint;
-		element.setId = setId;
+		element.hint = hint;
 		element.setLeft = setLeft;
-		element.setObj = function(obj) {
-			object = obj;
+
+		element.obj = function(value) {
+			if (value === undefined)
+				return object;
+
+			object = value;
 			return this;
 		};
-		element.getObj = function() {
-			return object;
-		};
+
 		element.setPos = setPos;
-		element.setRight = setRight;
-		element.setTop = setTop;
 		element.setWidth = setWidth;
 		element.verAlign = verAlign;
-		element.front = front;
 		return element;
 	};
 })();
@@ -402,7 +358,7 @@ var Container = (function(){
 		return this;
 	}
 	
-	function setScroll(height) {
+	function scroll(height) {
 		if (height) 
 			this.style.height = height;
 		
@@ -433,7 +389,7 @@ var Container = (function(){
 		cont.append = append;
 		cont.horAlign = horAlign;
 		cont.html = html;
-		cont.setScroll = setScroll;
+		cont.scroll = scroll;
 		cont.setWrap = setWrap;
 		
 		if (tag && !String.isString(tag))
@@ -443,87 +399,82 @@ var Container = (function(){
 })();
 
 
-var Input = (function(){
-	function onChange(fn) {
-		setEvtHandler(this, "change", fn);
-		return this;
-	}
-	
-	return function(type) {
-		var input = Element("input");
-		input.setAttribute("type", type);
-		input.onChange = onChange;
-		return input;
-	};
-})();
+var Input = function(type) {
+	return Element("input").attr("type", type);
+};
 
 var Check = function() {
-	return Input("checkbox").setClass("dialog-check");
-}
+	return Input("checkbox").cls("dialog-check");
+};
 	
 function LabelCheck(caption) {
-	var cont = Span().setClass("dialog-label-check");
+	var cont = Span().cls("dialog-label-check");
 	var id = uid();
-	cont.check = Check().setId(id);
+	cont.check = Check().attr('id', id);
 	cont.append( cont.check );
-	cont.append( cont.label = Label(caption).setFor(id) );		
+	cont.append( cont.label = Label(caption).attr("for", id) );
 	return cont;
 }
 	
 function Radio() {
-	return Input("radio").setClass("dialog-radio");;
+	return Input("radio").cls("dialog-radio");;
 }
 
 var ListItem = (function(){
-	function isChecked() {
-		return this.getInput().checked;
+	function checked() {
+		return this.input().checked;
 	}
 	
-	function getList() {
+	function list() {
 		var node = this.parentNode;
-		while (!node.getItems)
+		while (!node.getItems)  // region
 			node = node.parentNode;
 		return node;
 	}
 	
-	function onClick(fn) {
-		if (String.isString(fn))
-			fn = new Function(fn);
-
-		this.itemClick = fn; //cannot use "onclick"
+	function on(type, handler) {
+		if (type == 'click')
+			type = 'itemclick' //cannot use "onclick"
+		setEvtHandler(this, type, handler);
 		return this;
 	}
 	
 	function inputClick(){
 		if (this.parentNode.inputClick)
 			this.parentNode.inputClick();
-		if (this.parentNode.itemClick)
-			this.parentNode.itemClick();
+		if (this.parentNode.onitemclick)
+			this.parentNode.onitemclick();
 	}
 	
 	return function(input, caption, obj) {
 		var id = uid();
-		input.setId(id).onClick(inputClick);
-		var label = Label(caption).setFor(id);
-		var listitem = Container([input, label]).setClass("dialog-list-item").setObj(obj);
-		listitem.getInput = function(){ return input; };
-		listitem.getLabel = function(){ return label; };
-		listitem.isChecked = isChecked;
-		listitem.onClick = onClick;
-		listitem.getList = getList;
+		input.attr('id', id).on('click', inputClick);
+		var label = Label(caption).attr("for", id);
+		var listitem = Container([input, label]).cls("dialog-list-item");
+		if (obj !== undefined)
+			listitem.obj(obj);
+
+		listitem.input = function(){ return input; };
+		listitem.label = function(){ return label; };
+		listitem.checked = checked;
+		listitem.on = on;
+		listitem.list = list;
 		return listitem;
 	};
 })();
 
 var CheckItem = (function(){
-	function setChecked(checked) {
-		this.getInput().checked = (checked === undefined || checked);
+	function checked(state) {
+		if (state === undefined)
+			return this.input().checked;
+
+		this.input().checked = state;
 		return this;
 	}
 
 	return function(caption, obj){
 		var listitem = ListItem( Check(), caption, obj );
-		listitem.setChecked = setChecked;
+		listitem.checked = checked;
 		return listitem;
 	};
 })();
@@ -532,9 +483,9 @@ function RadioItem(caption, obj) {
 	return ListItem( Radio(), caption, obj );
 };
 
-var List = (function(){
+var List = (function() {
 	function inputClick(){ //for internal use
-		var list = this.getList();
+		var list = this.list();
 		if (list.inputClick) //for selection control in radio list
 			list.inputClick(this);
 		if (list.itemClick) //use event
@@ -549,19 +500,18 @@ var List = (function(){
 	}
 	
 	function addItem(listitem) {
-		this.region.append(listitem);
+		this._region.append(listitem);
 		this.getItems().push(listitem);
 		listitem.inputClick = inputClick;
 		return listitem;
 	}
 	
-	function newregion(caption) {
-		var title = Heading(caption);
+	function region(caption) {
+		var r = Container().cls("dialog-list-region");
+		var title = Heading(caption).on('click', function() { $(r).toggle(); });
 		this.append(title);
-		var region = Container().setClass("dialog-list-region");
-		this.append(region);
-		this.region = region;
-		title.onclick = function() { $(region).toggle(); };
+		this.append(r);
+		this._region = r;
 		return this;
 	}
 	
@@ -574,17 +524,12 @@ var List = (function(){
 	}
 
 	return function(border) {
-		var list = Container();
-		if (border)
-			list.setClass("dialog-list-border");
-		else
-			list.setClass("dialog-list");
-		
+		var list = Container().cls(border ? 'dialog-list-border' : 'dialog-list');
 		var items = [];
 		list.getItems = function(){ return items; };
 		list.addItem = addItem;
-		list.region = list;
-		list.newregion = newregion;
+		list._region = list;
+		list.region = region;
 		list.getLast = getLast;
 		list.onItemClick = onItemClick;
 		return list;
@@ -599,7 +544,7 @@ var CheckList = (function(){
 	function clearSelection() {
 		var items = this.getItems();
 		for (var i = 0; i < items.length; i++)
-			items[i].setChecked(false);
+			items[i].checked(false);
 		return this;
 	}
 	
@@ -620,17 +565,10 @@ var RadioList = (function(){
 		this.setSelected(listitem, true);
 	}
 	
-	function onSelChange(fn) {
-		if (String.isString(fn))
-			fn = new Function(fn);
-		this.selectionChange = fn;
-		return this;
-	}
-	
 	function setSelectedObj(obj) {
 		var items = this.getItems();
 		for (var i = 0; i < items.length; i++)
-			if (items[i].getObj() === obj){
+			if (items[i].obj() === obj){
 				this.setSelected(items[i]);
 				break;
 			}
@@ -639,7 +577,7 @@ var RadioList = (function(){
 	
 	function getSelectedObj() {
 		var listitem = this.getSelected();
-		return (listitem === null ? null : listitem.getObj());
+		return (listitem === null ? null : listitem.obj());
 	}
 	
 	return function(border) {
@@ -647,7 +585,6 @@ var RadioList = (function(){
 		var list = List(border);
 		list.add = add;
 		list.inputClick = inputClick;
-		list.onSelChange = onSelChange;
 		list.setSelectedObj = setSelectedObj;
 		list.getSelectedObj = getSelectedObj;
 		list.getSelected = function() { return selitem; }
@@ -656,16 +593,16 @@ var RadioList = (function(){
 				return;
 				
 			if (selitem) {
-				selitem.getInput().checked = false;
+				selitem.input().checked = false;
 				selitem = null;
 			}
 				
 			if (listitem) {
-				listitem.getInput().checked = true;
+				listitem.input().checked = true;
 				selitem = listitem;
 				
-			if (evt && list.selectionChange)
-				list.selectionChange();
+			if (evt && list.onselchange)
+				list.onselchange();
 			}
 		}
 		return list;
@@ -674,7 +611,10 @@ var RadioList = (function(){
 
 var Combo = (function() {
 	function addItem(caption, obj) {
-		var option = Element("option").setObj(obj);
+		var option = Element("option");
+		if (obj !== undefined)
+			option.obj(obj);
+
 		option.text = caption;
 		this.add(option);
 		return option;
@@ -688,10 +628,8 @@ var Combo = (function() {
 		this.innerHTML = "";
 	}
 	
-	return function(size) {
-		var combo = Element("select").setClass("dialog-select");
-		if (size != undefined)
-			combo.setAttribute("size", size);
+	return function() {
+		var combo = Element("select").cls("dialog-select");
 		combo.addItem = addItem;
 		combo.getSelected = getSelected;
 		combo.clear = clear;
@@ -700,7 +638,7 @@ var Combo = (function() {
 })();
 
 function Button(caption, onclick) {
-	var button = Input("button").setClass("dialog-button").onClick(onclick);
+	var button = Input("button").cls("dialog-button").on('click', onclick);
 	button.value = caption;
 	return button;
 }
@@ -718,21 +656,21 @@ function ModalBtn(caption, result) {
 }
 
 function BitBtn(src, caption, onclick, accel) {
-	var button = Container("button").set("type", "button").setClass("dialog-bitbtn").onClick(onclick).html('<img src="icons/' + src + '.png"><br><strong>' + caption + '</strong>');
+	var button = Container("button").attr("type", "button").cls("dialog-bitbtn").on('click', onclick).html('<img src="icons/' + src + '.png"><br><strong>' + caption + '</strong>');
 	if (accel)
 		$(document).hotKey(accel, function() { button.click(); return false; });
 	return button;
 }
 
 function Edit(text) {
-	var edit = Input("edit").setClass("dialog-edit");
+	var edit = Input("edit").cls("dialog-edit");
 	if (text)
 		edit.value = text;
 	return edit;
 }
 
 function Textarea(text, rows) {
-	var edit = Element("textarea").setClass("dialog-textarea");
+	var edit = Element("textarea").cls("dialog-textarea");
 	if (text)
 		edit.value = text;
 	if (rows)
@@ -741,34 +679,29 @@ function Textarea(text, rows) {
 }
 
 var Picture = function(src) {
-	return Element("img").set("src", src);
+	return Element("img").attr("src", src);
 };
 
 var Icon = function(src){
-	return Picture(src).setClass("dialog-icon");
+	return Picture(src).cls("dialog-icon");
 }
 
 var CloseIcon = function(){
-	return Icon("icons/close.png").onClick("this.dialog().remove()").setHint(T.close);
+	return Icon("icons/close.png").on('click', "this.dialog().remove()").cursor('pointer').hint(T.close);
 };
 	
 var HideIcon = function(){
 	//show tooltip "Close", even if just hiding the dialog
-	return Icon("icons/close.png").onClick("this.dialog().hide()").setHint(T.close);
+	return Icon("icons/close.png").on('click', "this.dialog().hide()").cursor('pointer').hint(T.close);
 };
 
 var InfoIcon = function(onclick){
-	return Icon("icons/info-small.png").setHint(T.info).onClick(onclick);
+	return Icon("icons/info-small.png").hint(T.info).cursor('pointer').on('click', onclick);
 };
 
 var Label = (function(){
-	function setFor(id) {
-		return this.set("htmlFor", id).set("for", id);
-	}
-
 	return function(caption) {
-		var label = Element("label").setClass("dialog-label");
-		label.setFor = setFor;
+		var label = Element("label").cls("dialog-label");
 		label.appendChild(document.createTextNode(caption));
 		return label;
 	};
@@ -819,13 +752,13 @@ var Grid = (function() {
 	}
 	
 	function addLabel(caption) {
-		return this.addCell(false).setClass('dialog-label').html(caption);
+		return this.addCell(false).cls('dialog-label').html(caption);
 	}
 	
 	function addInput(input) {
-		var cell = this.addCell(false).setClass('dialog-input');
+		var cell = this.addCell(false).cls('dialog-input');
 		if (input)
-			cell.append(input.hFill());
+			cell.append(input.hfill());
 		return cell;
 	}
 	
@@ -837,25 +770,15 @@ var Grid = (function() {
 				this.addInput(array[i]);
 	}
 	
-	function cellSpace(space) {
-		return this.set("cellspacing", space);
-	}
-	
-	function cellPad(pad) {
-		return this.set("cellpadding", pad);
-	}
-	
 	return function(cols) {
-		var grid = Element("table").setClass('dialog-grid');
+		var grid = Element("table").cls('dialog-grid').attr("cellspacing", 0);
 		grid.cols = cols || 2;
 		grid.cindex = 1;
 		grid.addCell = addCell;
 		grid.addLabel = addLabel;
 		grid.addInput = addInput;
 		grid.add = add;
-		grid.cellSpace = cellSpace;
-		grid.cellPad = cellPad;
-		return grid.cellSpace(0);
+		return grid;
 	};
 })();
 
@@ -880,7 +803,7 @@ var Tooltip = (function() {
 	
 	return function(content) {
 		if (tooltip === null) {
-			tooltip = Container().setClass('dialog-tooltip');
+			tooltip = Container().cls('dialog-tooltip');
 			document.body.appendChild(tooltip);
 			
 			tooltip.showAt = function(element, time) {
@@ -915,7 +838,7 @@ var Tooltip = (function() {
 
 function Message(msgkey, titlekey) { //translatable message box
 	var dlg = DIALOGS.create();
-	dlg.getFrame().setWidth("30em");
+	dlg.frame().setWidth("30em");
 	dlg.setInit( function() {
 		if (titlekey)
 			this.setTitle( APP.trans(titlekey).capitalize() );
@@ -930,8 +853,8 @@ function Message(msgkey, titlekey) { //translatable message box
 
 function Prompt(msgkey, titlekey, text) {
 	var dlg = DIALOGS.create();
-	dlg.getFrame().setWidth("20em");
-	var edit = Textarea(text, 2).hFill();
+	dlg.frame().setWidth("20em");
+	var edit = Textarea(text, 2).hfill();
 	dlg.showFocus = edit;
 	dlg.getValue = function() { return edit.value; };
 	dlg.setInit( function() {
@@ -961,7 +884,7 @@ function timg(titlekey, src) { //image with translatable title
 	
 	dlg.setInit( function() {
 		this.setTitle( T[titlekey].capitalize() ).addIcon( CloseIcon() ).addFoot( CloseBtn(T.ok) );
-		this.addContent( Picture(src).onLoad(pictureLoad) );
+		this.addContent( Picture(src).on('load', pictureLoad) );
 	});
 	
 	dlg.show().move();

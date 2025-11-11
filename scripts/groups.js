@@ -8,7 +8,7 @@ var GROUPS = (function() {
 	var inany;
 
 	function infoClick() {
-		var name = this.getObj();
+		var name = this.obj();
 		Message(name + "info", name).showAt(this);
 	}
 	
@@ -19,18 +19,18 @@ var GROUPS = (function() {
 	
 	function itemClick() {
 		var listitem = this;
-		var group = listitem.getObj();
-		if (listitem.isChecked() && group.param) {
+		var group = listitem.obj();
+		if (listitem.checked() && group.param) {
 			var promptDlg = Prompt(T[group.param.prompt], T[group.param.name], group.param.value);
 			promptDlg.showModalAt(this, function(result){
 				if (result == "cancel") {
-					listitem.setChecked(false);
+					listitem.checked(false);
 					return;
 				}
 				
 				var value = parseFloat(promptDlg.getValue());
 				if ( Number.isNaN(value) ) {
-					listitem.setChecked(false);
+					listitem.checked(false);
 					return;
 				}
 				
@@ -46,10 +46,10 @@ var GROUPS = (function() {
 		selected.clear();
 		var items = list.getItems();
 		for (var k = 0; k < items.length; k++)
-			if ( items[k].isChecked() )
-				selected.push( items[k].getObj() );
+			if ( items[k].checked() )
+				selected.push( items[k].obj() );
 		
-		GROUPS.selectedContain = (inany.isChecked() ? matchAny : matchAll);
+		GROUPS.selectedContain = (inany.checked() ? matchAny : matchAll);
 		PERTAB.updateColors();
 	}
 
@@ -109,15 +109,15 @@ var GROUPS = (function() {
 		getDlg: function() {
 			if (dlg === null){
 				dlg = DIALOGS.create();
-				dlg.setWidth("25em");
+				dlg.width("25em");
 				dlg.setInit(function() {
 					this.setTitle(T.groups).addFoot( [Button(T.clear, clearClick), HideBtn()] ).addIcon( HideIcon() );
-					list = CheckList(true).setScroll("10em");
+					list = CheckList(true).scroll("10em");
 					for (var i = 0; i < all.length; i++) {
 						var group = all[i];
-						list.add(T[group.key], group).setChecked(group.isSelected()).onClick(itemClick);
+						list.add(T[group.key], group).checked(group.isSelected()).on('click', itemClick);
 						if ( APP.hasContent(group.key + "info") )
-							list.getLast().append( InfoIcon(infoClick).setObj(group.key) );
+							list.getLast().append( InfoIcon(infoClick).obj(group.key) );
 					}
 				
 					var markType = RadioList().margTop("6px").onItemClick(update);

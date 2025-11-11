@@ -249,8 +249,8 @@ var SCALE = LINEAR_SCALE;
 var PropInfoIcon = (function(){
 	function iconClick() {
 		var dlg = DIALOGS.create();
-		var prop = this.getObj();
-		dlg.setWidth("35em");
+		var prop = this.obj();
+		dlg.frame().setWidth("35em");
 		dlg.setInit( function() {
 			var info = prop.key + "info";
 			if (APP.hasContent(info))
@@ -270,7 +270,7 @@ var PropInfoIcon = (function(){
 	}
 
 	return function(prop) {
-		return InfoIcon(iconClick).setObj(prop);
+		return InfoIcon(iconClick).obj(prop);
 	}
 })();
 
@@ -299,11 +299,11 @@ var getDataDlg = (function() {
 	return function() {
 		if (dlg === null) {
 			dlg = DIALOGS.create();
-			dlg.setWidth("20em");
+			dlg.frame().setWidth("20em");
 			dlg.setInit(function() {
 				this.setTitle(T.data);
 				this.addFoot( [Button(T.clear, clearClick), HideBtn()] ).addIcon( HideIcon() );
-				list = RadioList(true).setScroll("10em").onSelChange(selectionChange);
+				list = RadioList(true).scroll("10em").on('selchange', selectionChange);
 				this.addContent( list );
 				var cat = "";
 				PROPERTIES.restart();
@@ -311,7 +311,7 @@ var getDataDlg = (function() {
 					var prop = PROPERTIES.get();
 					if (prop.category != cat) {
 						cat = prop.category;
-						list.newregion(T[cat]);
+						list.region(T[cat]);
 					};
 					list.add(prop.getName(), prop);
 					if ( APP.hasContent(prop.key + "info") || prop.source )
@@ -334,8 +334,8 @@ var getColorDlg = (function() {
 	var map;
 	
 	function selectionChange() {
-		SCALE = scaling.getSelected().getObj();
-		COLORMAP = map.getSelected().getObj();
+		SCALE = scaling.getSelected().obj();
+		COLORMAP = map.getSelected().obj();
 		
 		if (PROPERTIES.selected && PROPERTIES.selected.numeric) {
 			if (COLORMAP && GROUPS.isSelected())
@@ -349,16 +349,16 @@ var getColorDlg = (function() {
 	return function() {
 		if (dlg === null) {
 			dlg = DIALOGS.create();
-			dlg.setWidth("11em");
+			dlg.frame().setWidth("11em");
 			dlg.setInit(function() {
 				this.setTitle(T.colormap).addFoot( HideBtn() ).addIcon( HideIcon() );
 				
-				scaling = RadioList().setHint(T.scalinghint).onSelChange(selectionChange);
+				scaling = RadioList().hint(T.scalinghint).on('selchange', selectionChange);
 				scaling.add(T.linear, LINEAR_SCALE);
 				scaling.add(T.log, LOG_SCALE);
 				scaling.setSelectedObj( LINEAR_SCALE );
 				
-				map = RadioList().setHint(T.colormaphint).onSelChange(selectionChange);
+				map = RadioList().hint(T.colormaphint).on('selchange', selectionChange);
 				map.add(T.none, null);
 				map.add(T[RAINBOW.key], RAINBOW);
 				map.add(T[YELLOW.key], YELLOW);
@@ -387,8 +387,8 @@ var getPlotDlg = (function() {
 		var items = list.getItems();
 		
 		for (var i = 0; i < items.length; i++)
-			if (items[i].isChecked())
-				selected.push(items[i].getObj());
+			if (items[i].checked())
+				selected.push(items[i].obj());
 		
 		if (selected.length == 0) {
 			Message(T.selectdataforplot).showModalAt(this);
@@ -402,11 +402,11 @@ var getPlotDlg = (function() {
 	return function(){
 		if (dlg === null) {
 			dlg = DIALOGS.create();
-			dlg.setWidth("22em");
+			dlg.frame().setWidth("22em");
 			dlg.setInit(function() {
 				this.setTitle(T.plot).addIcon( HideIcon() );
 				this.addFoot( [Button(T.clear, clearClick), Button(T.ok, okClick), HideBtn(T.cancel)] );
-				list = CheckList(true).setScroll("15em").margBottom("6px");
+				list = CheckList(true).scroll("15em").margBottom("6px");
 				var cat = "";
 				PROPERTIES.restart();
 				while (PROPERTIES.next()) {
@@ -414,7 +414,7 @@ var getPlotDlg = (function() {
 					if (prop.numeric) {
 						if (prop.category != cat) {
 							cat = prop.category;
-							list.newregion(T[cat]);
+							list.region(T[cat]);
 						};
 						list.add(prop.getName(false), prop);
 					}
@@ -440,7 +440,7 @@ var getListDlg = (function() {
 		for (var i = 0; i < combo.length; i++) {
 			var c = combo[i];
 			if (c.selectedIndex > 0)
-				selected.push(c.getSelected().getObj());
+				selected.push(c.getSelected().obj());
 		}
 		
 		if (selected.length == 0) {
@@ -455,7 +455,7 @@ var getListDlg = (function() {
 	return function(){
 		if (dlg === null) {
 			dlg = DIALOGS.create();
-			dlg.setWidth("24em");
+			dlg.frame().setWidth("24em");
 			combo = new Array(count);
 			for (var i = 0; i < count; i++)
 				combo[i] = Combo();
@@ -547,12 +547,12 @@ var getHistDlg = (function() {
 	return function(){
 		if (dlg === null) {
 			dlg = DIALOGS.create();
-			dlg.setWidth("20em");
+			dlg.frame().setWidth("20em");
 			editStart = Edit();
 			editStop = Edit();
 			editStep = Edit();
 			dlg.setInit(function() {
-				list = RadioList(true).setScroll("15em").onItemClick(itemClick)
+				list = RadioList(true).scroll("15em").onItemClick(itemClick)
 				var cat = "";
 				PROPERTIES.restart();
 				while (PROPERTIES.next()) {
@@ -560,7 +560,7 @@ var getHistDlg = (function() {
 					if (prop.numeric) {
 						if (prop.category != cat) {
 							cat = prop.category;
-							list.newregion(T[cat]);
+							list.region(T[cat]);
 						};
 						list.add(prop.getName(), prop);
 					}

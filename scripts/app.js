@@ -82,15 +82,15 @@ var APP = (function() {
 
 	function transMainUI() {
 		$("#toolbar").empty()
-		.append( BitBtn("groups", T.groups, btnGroupsClick).setHint(T.grouphint) )
-		.append( BitBtn("data", T.data, btnDataClick).setHint(T.datahint) )
-		.append( BitBtn("colormap", T.colormap, btnColorClick).setHint(T.colormaphint) )
-		.append( BitBtn("plot", T.plot, btnPlotClick).setHint(T.plothint) )
-		.append( BitBtn("histogram", T.histogram, btnHistClick).setHint(T.histogramhint) )
-		.append( BitBtn("table", T.table, btnListClick).setHint(T.tablehint) )
-		.append( BitBtn("layout", T.layout, btnLayoutClick).setHint(T.layouthint) )
-		.append( BitBtn("search", T.search, btnSearchClick, {key: 'f', modifier: 'ctrl'}).setHint(T.searchhint) )
-		.append( BitBtn("settings", T.settings, btnSettingsClick).setHint(T.settingshint) )
+		.append( BitBtn("groups", T.groups, btnGroupsClick).hint(T.grouphint) )
+		.append( BitBtn("data", T.data, btnDataClick).hint(T.datahint) )
+		.append( BitBtn("colormap", T.colormap, btnColorClick).hint(T.colormaphint) )
+		.append( BitBtn("plot", T.plot, btnPlotClick).hint(T.plothint) )
+		.append( BitBtn("histogram", T.histogram, btnHistClick).hint(T.histogramhint) )
+		.append( BitBtn("table", T.table, btnListClick).hint(T.tablehint) )
+		.append( BitBtn("layout", T.layout, btnLayoutClick).hint(T.layouthint) )
+		.append( BitBtn("search", T.search, btnSearchClick, {key: 'f', modifier: 'ctrl'}).hint(T.searchhint) )
+		.append( BitBtn("settings", T.settings, btnSettingsClick).hint(T.settingshint) )
 		.append( BitBtn("exit", T.exit, btnExitClick));
 		
 		document.title = T.maintitle;
@@ -103,16 +103,16 @@ var APP = (function() {
 	function getSettingsDlg(){
 		if (dlg === null) {
 			dlg = DIALOGS.create();
-			dlg.setWidth("12em");
+			dlg.width("12em");
 			dlg.setInit(function() {
 				this.setTitle(T.settings).addFoot( HideBtn() ).addIcon( HideIcon() );
 				this.addContent( [Heading(T.numericaccuracy + ":"),
-								  Button("1.23", limitPrecisionClick).setWidth("5em").setHint(T.limprechint),
-								  Button("1.2345…", fullPrecisionClick).setWidth("5em").setHint(T.fullprechint)] );
+								  Button("1.23", limitPrecisionClick).setWidth("5em").hint(T.limprechint),
+								  Button("1.2345…", fullPrecisionClick).setWidth("5em").hint(T.fullprechint)] );
 				this.addContent( [Heading(T.numericformat + ":").append(
 										InfoIcon("tmsg('numericformatinfo', 'numericformat')").margLeft("5px")	),
-								  Button("1.2e3", compFormatClick).setWidth("5em").setHint(T.compfmthint),
-								  Button("1.2×10³", sciFormatClick).setWidth("5em").setHint(T.scifmthint)] );
+								  Button("1.2e3", compFormatClick).setWidth("5em").hint(T.compfmthint),
+								  Button("1.2×10³", sciFormatClick).setWidth("5em").hint(T.scifmthint)] );
 			});
 		};
 		
