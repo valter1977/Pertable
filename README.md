@@ -1,0 +1,1 @@
+This is a periodic table program, created a long time ago (around 2012) as a web app. The idea was to have a lightweight self-contained Javascript/HTML/CSS solution which wouldn't require any server-side support. As a result, it loads fast and is highly interactive. Though, it may require some amendments to incorporate modern web technologies.
